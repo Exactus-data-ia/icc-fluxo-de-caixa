@@ -66,6 +66,17 @@ tbody td{padding:9px 12px;border-bottom:1px solid #f0f0f0;vertical-align:middle}
 .badge.red{background:#ffebee;color:#c62828}.badge.orange{background:#fff3e0;color:#e65100}
 .badge.blue{background:#e3f2fd;color:#1565c0}.badge.green{background:#e8f5e9;color:#2e7d32}
 @media(max-width:768px){.cards-grid{grid-template-columns:repeat(2,1fr)}.tab-content{padding:14px}}
+.bal-editor{background:white;border-radius:10px;padding:16px 20px;margin-bottom:22px;box-shadow:0 2px 8px rgba(0,0,0,.07);border:1px dashed #90aecb}
+.bal-editor-title{font-size:12px;font-weight:700;color:#5a7186;text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
+.bal-editor-title span{font-size:10px;color:#aaa;font-weight:400;text-transform:none}
+.bal-rows{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.bal-row{display:flex;flex-direction:column;gap:4px}
+.bal-row label{font-size:11px;color:#5a7186;font-weight:600;display:flex;align-items:center;gap:6px}
+.bal-dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+.bal-input{border:1px solid #c8d6e5;border-radius:6px;padding:6px 10px;font-size:14px;font-weight:700;color:#1e3a5f;background:#f8fafc;width:100%}
+.bal-input:focus{outline:none;border-color:#1e3a5f;background:white}
+.bal-save{background:#1e3a5f;color:white;border:none;border-radius:6px;padding:6px 16px;font-size:12px;font-weight:700;cursor:pointer;margin-top:4px}
+.bal-save:hover{background:#0d2137}
 </style>
 </head>
 <body>
@@ -85,6 +96,29 @@ tbody td{padding:9px 12px;border-bottom:1px solid #f0f0f0;vertical-align:middle}
   <div class="company-header" style="background:linear-gradient(135deg,#0d1b2a,#1e3a5f)">
     <h2>Resumo Executivo Consolidado &#8212; ICC Grupo</h2>
     <p>Fluxo de Caixa 2026 &#183; 3 empresas &#183; Banco: R$ 213.755,05</p>
+  </div>
+    <div class="bal-editor" id="bal-editor">
+    <div class="bal-editor-title">
+      💰 Saldo em Banco Atual <span>Edite os valores e clique em Salvar — ficam gravados no navegador</span>
+    </div>
+    <div class="bal-rows">
+      <div class="bal-row">
+        <label><span class="bal-dot" style="background:#2196F3"></span>ICC Instituto</label>
+        <input class="bal-input" id="bal_instituto" type="text" placeholder="R$ 0,00"/>
+      </div>
+      <div class="bal-row">
+        <label><span class="bal-dot" style="background:#43a047"></span>ICC Telecom</label>
+        <input class="bal-input" id="bal_telecom" type="text" placeholder="R$ 0,00"/>
+      </div>
+      <div class="bal-row">
+        <label><span class="bal-dot" style="background:#8e24aa"></span>ICC Medical</label>
+        <input class="bal-input" id="bal_medical" type="text" placeholder="R$ 0,00"/>
+      </div>
+      <div class="bal-row" style="justify-content:flex-end">
+        <div></div>
+        <button class="bal-save" onclick="saveBal()">✔ Salvar e Recalcular</button>
+      </div>
+    </div>
   </div>
   <div class="cards-grid">
     <div class="card"><div class="card-value">R$ 213.755,05</div><div class="card-label">Saldo Banco Consolidado</div></div>
@@ -405,6 +439,109 @@ function setPagView(id,v){
   PAG_CHARTS[id].update('active');
 }
 
+
+// ── Saldo Banco Manual (localStorage) ──
+var SALDOS_KEY = 'icc_saldos_banco';
+
+function parseBRL(s){
+  if(!s) return 0;
+  // "213.755,05" or "213755.05" or "213755"
+  s = s.replace(/[R$\s]/g,'').trim();
+  if(s.includes(',') && s.includes('.')){
+    s = s.replace(/\./g,'').replace(',','.');
+  } else if(s.includes(',')){
+    s = s.replace(',','.');
+  }
+  return parseFloat(s)||0;
+}
+function formatBRL(v){
+  return v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+}
+
+function loadSaldos(){
+  try { return JSON.parse(localStorage.getItem(SALDOS_KEY)||'{}'); } catch(e){ return {}; }
+}
+function saveSaldoStore(s){ localStorage.setItem(SALDOS_KEY, JSON.stringify(s)); }
+
+function initBalEditor(){
+  var s = loadSaldos();
+  ['instituto','telecom','medical'].forEach(function(id){
+    var el = document.getElementById('bal_'+id);
+    if(!el) return;
+    // Use stored value OR the value from CHART_DATA (API saldo_inicial)
+    var val = s[id] !== undefined ? s[id] : (CHART_DATA[id] ? 0 : 0);
+    el.value = formatBRL(val);
+    // Update CHART_DATA balance
+    if(CHART_DATA[id]) CHART_DATA[id].saldo_override = val;
+  });
+  applyBal();
+}
+
+function saveBal(){
+  var s = {};
+  ['instituto','telecom','medical'].forEach(function(id){
+    var el = document.getElementById('bal_'+id);
+    if(!el) return;
+    s[id] = parseBRL(el.value);
+    el.value = formatBRL(s[id]);
+  });
+  saveSaldoStore(s);
+  applyBal();
+  // Flash feedback
+  var btn = document.querySelector('.bal-save');
+  btn.textContent='✔ Salvo!'; btn.style.background='#2e7d32';
+  setTimeout(function(){ btn.textContent='✔ Salvar e Recalcular'; btn.style.background='#1e3a5f'; },1500);
+}
+
+function applyBal(){
+  var s = loadSaldos();
+  var totBanco = 0;
+  var totRec = 0, totPag = 0;
+
+  ['instituto','telecom','medical'].forEach(function(id){
+    var saldo = s[id] !== undefined ? s[id] : 0;
+    totBanco += saldo;
+    // Get totRec/totPag from PAG_DATA and CHART_DATA
+    var mRec = CHART_DATA[id].m.rec.reduce(function(a,b){return a+(b>0?b:0);},0);
+    var mPag = PAG_DATA[id].m.pag.reduce(function(a,b){return a+(b<0?-b:b);},0);
+    totRec += mRec; totPag += mPag;
+
+    // Update company card "Saldo Banco Atual"
+    var compCards = document.querySelectorAll('#'+id+' .card');
+    if(compCards[0]){
+      compCards[0].querySelector('.card-value').textContent = 'R$ '+formatBRL(saldo);
+    }
+    // Update company header
+    var hdr = document.querySelector('#'+id+' .company-header p');
+    if(hdr){
+      var proj = saldo + mRec - mPag;
+      hdr.innerHTML = 'Fluxo de Caixa '+ANO+' &#183; Banco: R$ '+formatBRL(saldo)+' &#183; Saldo Projetado: R$ '+formatBRL(proj);
+    }
+    // Update company saldo projetado card
+    if(compCards[3]){
+      var proj2 = saldo + mRec - mPag;
+      compCards[3].querySelector('.card-value').style.color = proj2 >= 0 ? '#2e7d32' : '#c62828';
+      compCards[3].querySelector('.card-value').textContent = 'R$ '+formatBRL(proj2);
+    }
+  });
+
+  // Update consolidado KPI cards
+  var conCards = document.querySelectorAll('#consolidado .cards-grid .card');
+  if(conCards[0]) conCards[0].querySelector('.card-value').textContent = 'R$ '+formatBRL(totBanco);
+  var proj = totBanco + totRec - totPag;
+  if(conCards[3]){
+    conCards[3].querySelector('.card-value').textContent = 'R$ '+formatBRL(proj);
+    conCards[3].querySelector('.card-value').style.color = proj >= 0 ? '#2e7d32' : '#c62828';
+  }
+  // Update consolidado header
+  var conHdr = document.querySelector('#consolidado .company-header p');
+  if(conHdr){
+    conHdr.innerHTML = 'Fluxo de Caixa '+ANO+' &#183; 3 empresas &#183; Banco: R$ '+formatBRL(totBanco);
+  }
+}
+
+var ANO = '2026';
+window.addEventListener('load', function(){ initBalEditor(); });
 function showTab(id){
   document.querySelectorAll('.tab-content').forEach(function(t){t.classList.remove('active')});
   document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active')});
