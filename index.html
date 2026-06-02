@@ -53,8 +53,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .company-dot{width:13px;height:13px;border-radius:50%;flex-shrink:0}.company-info{flex:1;min-width:140px}
 .company-info strong{display:block;font-size:14px}.company-info span{font-size:12px;color:#999}
 .pct-bar-wrap{flex:2;min-width:80px}.pct-bar-bg{background:#eee;border-radius:4px;height:6px}.pct-bar{height:6px;border-radius:4px}
-.company-value{text-align:right;min-width:130px}.company-value strong{display:block;font-size:16px;font-weight:800}
-.company-value span{font-size:11px;color:#aaa}
+.company-value{text-align:right;min-width:130px}.company-value strong{display:block;font-size:16px;font-weight:800}.company-value span{font-size:11px;color:#aaa}
 .table-container{overflow-x:auto}
 table{width:100%;border-collapse:collapse;font-size:12.5px}
 thead th{background:#f5f7fa;padding:10px 12px;text-align:left;font-weight:700;color:#444;border-bottom:2px solid #e0e4ea;white-space:nowrap}
@@ -68,7 +67,7 @@ tbody td{padding:9px 12px;border-bottom:1px solid #f0f0f0;vertical-align:middle}
 <body>
 <div class="header">
   <div class="header-left"><h1>&#128176; Fluxo de Caixa &#8212; ICC Grupo</h1><p>Gerado automaticamente via integracao Omie API</p></div>
-  <div class="header-right">Ultima atualizacao<br/><strong>02/06/2026 17:09:34</strong></div>
+  <div class="header-right">Ultima atualizacao<br/><strong>02/06/2026 17:13:14</strong></div>
 </div>
 <div class="tabs">
   <button class="tab-btn active" data-tab="consolidado" onclick="showTab('consolidado')">&#128202; Consolidado</button>
@@ -78,11 +77,10 @@ tbody td{padding:9px 12px;border-bottom:1px solid #f0f0f0;vertical-align:middle}
   <button class="tab-btn" data-tab="medical"      onclick="showTab('medical')">&#127973; ICC Medical</button>
 </div>
 
-<!-- CONSOLIDADO -->
 <div id="consolidado" class="tab-content active">
   <div class="company-header" style="background:linear-gradient(135deg,#0d1b2a,#1e3a5f)">
     <h2>Resumo Executivo Consolidado &#8212; ICC Grupo</h2>
-    <p>Fluxo de Caixa 2026 &nbsp;&#183;&nbsp; 3 empresas &nbsp;&#183;&nbsp; Banco: R$ 213.755,05</p>
+    <p>Fluxo de Caixa 2026 &#183; 3 empresas &#183; Banco: R$ 213.755,05</p>
   </div>
   <div class="cards-grid">
     <div class="card"><div class="card-value">R$ 213.755,05</div><div class="card-label">Saldo Banco Consolidado</div></div>
@@ -90,12 +88,12 @@ tbody td{padding:9px 12px;border-bottom:1px solid #f0f0f0;vertical-align:middle}
     <div class="card red"><div class="card-value">R$ 1.869.403,75</div><div class="card-label">Total a Pagar (2026)</div></div>
     <div class="card red"><div class="card-value" style="color:#c62828">R$ -286.867,25</div><div class="card-label">Saldo Projetado Final</div></div>
   </div>
-    <div class="chart-section">
+  <div class="chart-section">
     <div class="chart-header">
-      <h3>&#128200; Fluxo de Caixa &#8212; Entradas vs Saidas</h3>
+      <h3>&#128200; Fluxo de Caixa Consolidado &#8212; Entradas vs Saidas</h3>
       <div class="chart-toggles">
-        <button class="chart-toggle active" id="btn_m_con" onclick="setView_chart_consolidado('m')">Mensal</button>
-        <button class="chart-toggle"        id="btn_s_con" onclick="setView_chart_consolidado('s')">Semanal</button>
+        <button class="chart-toggle active" id="btn_m_consolidado" onclick="setView('consolidado','m')">Mensal</button>
+        <button class="chart-toggle"        id="btn_s_consolidado" onclick="setView('consolidado','s')">Semanal</button>
       </div>
     </div>
     <div class="chart-wrap"><canvas id="chart_consolidado"></canvas></div>
@@ -105,34 +103,6 @@ tbody td{padding:9px 12px;border-bottom:1px solid #f0f0f0;vertical-align:middle}
       <span><span class="legend-line" style="background:#1e3a5f"></span>Saldo Acumulado</span>
     </div>
   </div>
-  <script>
-  (function(){
-    var D={m:{labels:["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"],rec:[52400,31,61627,62,86115,77,132527,84,149123,53,764094,71,98822,45,6827,94,5061,28,4060,4060,4060],pag:[-9310,68,0,-93123,22,-104441,25,-144163,35,-357200,74,-201897,08,-196071,35,-194614,17,-191808,25,-192388,25,-184385,41],bal:[256844,68,318472,3,311464,85,339551,44,344511,62,751405,59,648330,96,459087,55,269534,66,81786,41,-106541,84,-286867,25]},
-           s:{labels:["01/01","08/01","15/01","22/01","29/01","05/02","12/02","19/02","26/02","05/03","12/03","19/03","26/03","02/04","09/04","16/04","23/04","30/04","07/05","14/05","21/05","28/05","04/06","11/06","18/06","25/06","02/07","09/07","16/07","23/07","30/07","06/08","13/08","20/08","27/08","03/09","10/09","17/09","24/09","01/10","08/10","15/10","22/10","29/10","05/11","12/11","19/11","26/11","03/12","10/12","17/12","24/12"], rec:[0,0,4600,3001,28,35511,03,12285,78,15468,28,21410,28,4251,28,34197,78,1600,17754,37,25899,16,24164,46,37681,8,28741,28,9651,28,56453,48,28500,13866,68,29301,27,37488,91,89044,99,180053,8,200543,34,256833,63,98818,46,30177,45,41075,7,4569,8,1766,66,0,4060,1001,28,1766,66,0,4060,0,1001,28,0,4060,0,0,0,0,4060,0,0,0,4060,0,0],pag:[0,-7125,0,-2185,68,0,0,0,0,0,-14,35,-25936,49,0,-66940,18,-5840,59,-11028,3,-19530,25,-65993,12,-2281,19,-3224,64,-38063,08,-65774,42,-37101,21,-37137,98,-225459,09,-42342,68,-43801,68,-11570,31,-111637,25,-46816,3,-33281,25,-4467,28,-109879,18,-22595,91,-58315,52,-3249,14,-7726,6,-118230,32,-37020,41,-29555,16,-9558,28,-108512,25,-44606,92,-29130,8,-4217,28,-77202,65,-53036,88,-33487,54,-24443,9,-9558,28,-115056,46,-30639,87,-29130,8],bal:[213755,05,206630,05,211230,05,212045,65,247556,68,259842,46,275310,74,296721,02,300972,3,335155,73,310819,24,328573,61,287532,59,305856,46,332509,96,341720,99,285379,15,339551,44,364826,8,340630,4,304157,25,304544,95,356451,96,311046,67,469247,33,682279,28,769527,43,688067,63,682327,03,653615,58,650914,96,541035,78,522499,87,465185,63,463703,15,455976,55,341806,23,304785,82,276231,94,266673,66,162221,41,117614,49,88483,69,84266,41,7063,76,-41913,12,-75400,66,-99844,56,-109402,84,-220399,3,-251039,17,-280169,97]}};
-    var fmtV=function(v){var a=Math.abs(v);if(a>=1e6)return'R$ '+(v/1e6).toFixed(1).replace('.',',')+' M';if(a>=1000)return'R$ '+(v/1000).toFixed(0)+'K';return'R$ '+v.toFixed(0);};
-    var chart=new Chart(document.getElementById('chart_consolidado').getContext('2d'),{
-      data:{labels:D.m.labels,datasets:[
-        {type:'bar', label:'Entradas',data:D.m.rec,backgroundColor:'rgba(67,160,71,.65)',borderColor:'#43a047',borderWidth:1,order:2},
-        {type:'bar', label:'Saidas',  data:D.m.pag,backgroundColor:'rgba(229,57,53,.55)',borderColor:'#e53935',borderWidth:1,order:2},
-        {type:'line',label:'Saldo Acum.',data:D.m.bal,borderColor:'#1e3a5f',backgroundColor:'transparent',
-         borderWidth:2.5,pointRadius:4,pointBackgroundColor:'#1e3a5f',tension:.3,yAxisID:'y2',order:1}
-      ]},
-      options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
-        plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return' '+c.dataset.label+': '+fmtV(c.parsed.y);}}}},
-        scales:{
-          x:{ticks:{color:'#555',font:{size:10},maxRotation:45},grid:{color:'rgba(0,0,0,.04)'}},
-          y:{ticks:{color:'#888',font:{size:10},callback:function(v){return fmtV(v);}},grid:{color:'rgba(0,0,0,.06)'}},
-          y2:{position:'right',ticks:{color:'#1e3a5f',font:{size:10},callback:function(v){return fmtV(v);}},grid:{drawOnChartArea:false}}
-        }
-      }
-    });
-    window.setView_chart_consolidado=function(v){
-      ['m','s'].forEach(function(id){var b=document.getElementById(id==='m'?'btn_m_con':'btn_s_con');b.classList.toggle('active',id===v);});
-      chart.data.labels=D[v].labels;chart.data.datasets[0].data=D[v].rec;chart.data.datasets[1].data=D[v].pag;chart.data.datasets[2].data=D[v].bal;
-      chart.update('active');
-    };
-  })();
-  </script>
   <div class="curr-card">
     <div class="curr-card-title">&#9889; Antecipacao necessaria para manter caixa positivo</div>
     <div class='curr-company-row'><div class='curr-company-name'><div class='curr-dot' style='background:#2196F3'></div>ICC Instituto</div><div><span class='curr-value' style='color:#7b1fa2'>R$ 277.136,00</span><span class='curr-count'>para caixa positivo</span></div></div><div class='curr-company-row'><div class='curr-company-name'><div class='curr-dot' style='background:#43a047'></div>ICC Telecom</div><div><span class='curr-value' style='color:#2e7d32'>Nao necessaria</span><span class='curr-count'>Caixa projetado positivo</span></div></div><div class='curr-company-row'><div class='curr-company-name'><div class='curr-dot' style='background:#8e24aa'></div>ICC Medical</div><div><span class='curr-value' style='color:#7b1fa2'>R$ 223.272,00</span><span class='curr-count'>para caixa positivo</span></div></div>
@@ -148,10 +118,9 @@ tbody td{padding:9px 12px;border-bottom:1px solid #f0f0f0;vertical-align:middle}
   <div class="section"><h3>Semanas de Junho &#8212; Receita vs Despesa</h3>
     <div class="aging-grid"><div class='aging-box red'><div class='aging-count' style='font-size:18px'>Sem 1</div><div class='aging-label'>01/06 - 07/06</div><div style='margin-top:8px;font-size:12px;color:#2e7d32;font-weight:700'>+R$ 63.911,64</div><div style='font-size:12px;color:#c62828;font-weight:700'>-R$ 221.120,91</div><div class='aging-value' style='color:#c62828'>R$ -157.209,27</div></div><div class='aging-box green'><div class='aging-count' style='font-size:18px'>Sem 2</div><div class='aging-label'>08/06 - 14/06</div><div style='margin-top:8px;font-size:12px;color:#2e7d32;font-weight:700'>+R$ 221.266,21</div><div style='font-size:12px;color:#c62828;font-weight:700'>-R$ 43.643,21</div><div class='aging-value' style='color:#2e7d32'>+R$ 177.623,00</div></div><div class='aging-box green'><div class='aging-count' style='font-size:18px'>Sem 3</div><div class='aging-label'>15/06 - 21/06</div><div style='margin-top:8px;font-size:12px;color:#2e7d32;font-weight:700'>+R$ 198.798,89</div><div style='font-size:12px;color:#c62828;font-weight:700'>-R$ 80.927,11</div><div class='aging-value' style='color:#2e7d32'>+R$ 117.871,78</div></div><div class='aging-box green'><div class='aging-count' style='font-size:18px'>Sem 4</div><div class='aging-label'>22/06 - 28/06</div><div style='margin-top:8px;font-size:12px;color:#2e7d32;font-weight:700'>+R$ 236.014,34</div><div style='font-size:12px;color:#c62828;font-weight:700'>-R$ 4.708,23</div><div class='aging-value' style='color:#2e7d32'>+R$ 231.306,11</div></div><div class='aging-box green'><div class='aging-count' style='font-size:18px'>Sem 5</div><div class='aging-label'>29/06 - 30/06</div><div style='margin-top:8px;font-size:12px;color:#2e7d32;font-weight:700'>+R$ 44.103,63</div><div style='font-size:12px;color:#c62828;font-weight:700'>-R$ 6.801,28</div><div class='aging-value' style='color:#2e7d32'>+R$ 37.302,35</div></div></div></div>
   <div class="section"><h3>Resultado por Empresa</h3>
-    <div class="company-breakdown"><div class='company-row'><div class='company-dot' style='background:#2196F3'></div><div class='company-info'><strong>ICC Instituto</strong><span>Banco: R$ 213.755,05 &nbsp;|&nbsp; Rec: R$ 413.725,07 &nbsp;|&nbsp; Pag: R$ 904.616,58</span></div><div class='pct-bar-wrap'><div class='pct-bar-bg'><div class='pct-bar' style='width:30%;background:#2196F3'></div></div></div><div class='company-value'><strong style='color:#c62828'>R$ -277.136,46</strong><span>projetado</span></div></div><div class='company-row'><div class='company-dot' style='background:#43a047'></div><div class='company-info'><strong>ICC Telecom</strong><span>Banco: R$ 0,00 &nbsp;|&nbsp; Rec: R$ 652.776,04 &nbsp;|&nbsp; Pag: R$ 439.235,05</span></div><div class='pct-bar-wrap'><div class='pct-bar-bg'><div class='pct-bar' style='width:48%;background:#43a047'></div></div></div><div class='company-value'><strong style='color:#2e7d32'>R$ 213.540,99</strong><span>projetado</span></div></div><div class='company-row'><div class='company-dot' style='background:#8e24aa'></div><div class='company-info'><strong>ICC Medical</strong><span>Banco: R$ 0,00 &nbsp;|&nbsp; Rec: R$ 302.280,34 &nbsp;|&nbsp; Pag: R$ 525.552,12</span></div><div class='pct-bar-wrap'><div class='pct-bar-bg'><div class='pct-bar' style='width:22%;background:#8e24aa'></div></div></div><div class='company-value'><strong style='color:#c62828'>R$ -223.271,78</strong><span>projetado</span></div></div></div></div>
+    <div class="company-breakdown"><div class='company-row'><div class='company-dot' style='background:#2196F3'></div><div class='company-info'><strong>ICC Instituto</strong><span>Banco: R$ 213.755,05 | Rec: R$ 413.725,07 | Pag: R$ 904.616,58</span></div><div class='pct-bar-wrap'><div class='pct-bar-bg'><div class='pct-bar' style='width:30%;background:#2196F3'></div></div></div><div class='company-value'><strong style='color:#c62828'>R$ -277.136,46</strong><span>projetado</span></div></div><div class='company-row'><div class='company-dot' style='background:#43a047'></div><div class='company-info'><strong>ICC Telecom</strong><span>Banco: R$ 0,00 | Rec: R$ 652.776,04 | Pag: R$ 439.235,05</span></div><div class='pct-bar-wrap'><div class='pct-bar-bg'><div class='pct-bar' style='width:48%;background:#43a047'></div></div></div><div class='company-value'><strong style='color:#2e7d32'>R$ 213.540,99</strong><span>projetado</span></div></div><div class='company-row'><div class='company-dot' style='background:#8e24aa'></div><div class='company-info'><strong>ICC Medical</strong><span>Banco: R$ 0,00 | Rec: R$ 302.280,34 | Pag: R$ 525.552,12</span></div><div class='pct-bar-wrap'><div class='pct-bar-bg'><div class='pct-bar' style='width:22%;background:#8e24aa'></div></div></div><div class='company-value'><strong style='color:#c62828'>R$ -223.271,78</strong><span>projetado</span></div></div></div></div>
 </div>
 
-<!-- ANTECIPACAO -->
 <div id="antecipacao" class="tab-content">
   <div class="company-header" style="background:linear-gradient(135deg,#1a0533,#4a148c)">
     <h2>&#9889; Antecipacao de Recebiveis</h2>
@@ -170,7 +139,7 @@ tbody td{padding:9px 12px;border-bottom:1px solid #f0f0f0;vertical-align:middle}
 <div id="instituto" class="tab-content">
   <div class="company-header" style="background:linear-gradient(135deg,#1565c0,#2196F3)">
     <h2>ICC Instituto</h2>
-    <p>Fluxo de Caixa 2026 &nbsp;&#183;&nbsp; Banco: R$ 213.755,05 &nbsp;&#183;&nbsp; Saldo Projetado: R$ -277.136,46</p>
+    <p>Fluxo de Caixa 2026 &#183; Banco: R$ 213.755,05 &#183; Saldo Projetado: R$ -277.136,46</p>
   </div>
   <div class="cards-grid">
     <div class="card"><div class="card-value" style="color:#1e3a5f">R$ 213.755,05</div><div class="card-label">Saldo Banco Atual</div></div>
@@ -178,12 +147,12 @@ tbody td{padding:9px 12px;border-bottom:1px solid #f0f0f0;vertical-align:middle}
     <div class="card red"><div class="card-value">R$ 904.616,58</div><div class="card-label">A Pagar (299 titulos)</div></div>
     <div class="card red"><div class="card-value" style="color:#c62828">R$ -277.136,46</div><div class="card-label">Saldo Projetado</div></div>
   </div>
-    <div class="chart-section">
+  <div class="chart-section">
     <div class="chart-header">
       <h3>&#128200; Fluxo de Caixa &#8212; Entradas vs Saidas</h3>
       <div class="chart-toggles">
-        <button class="chart-toggle active" id="btn_m_instituto" onclick="setView_chart_instituto('m')">Mensal</button>
-        <button class="chart-toggle"        id="btn_s_instituto" onclick="setView_chart_instituto('s')">Semanal</button>
+        <button class="chart-toggle active" id="btn_m_instituto" onclick="setView('instituto','m')">Mensal</button>
+        <button class="chart-toggle"        id="btn_s_instituto" onclick="setView('instituto','s')">Semanal</button>
       </div>
     </div>
     <div class="chart-wrap"><canvas id="chart_instituto"></canvas></div>
@@ -193,34 +162,6 @@ tbody td{padding:9px 12px;border-bottom:1px solid #f0f0f0;vertical-align:middle}
       <span><span class="legend-line" style="background:#2196F3"></span>Saldo Acumulado</span>
     </div>
   </div>
-  <script>
-  (function(){
-    var D={m:{labels:["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"],rec:[30685,43,28426,34,36042,18,58166,02,39333,33,186300,61,34771,16,0,0,0,0,0],pag:[0,0,-87164,15,-92818,-90275,52,-185240,95,-76930,6,-75962,78,-75498,78,-75498,78,-75858,78,-69368,24],bal:[244440,48,272866,82,221744,85,187092,87,136150,68,137210,34,95050,9,19088,12,-56410,66,-131909,44,-207768,22,-277136,46]},
-           s:{labels:["01/01","08/01","15/01","22/01","29/01","05/02","12/02","19/02","26/02","05/03","12/03","19/03","26/03","02/04","09/04","16/04","23/04","30/04","07/05","14/05","21/05","28/05","04/06","11/06","18/06","25/06","02/07","09/07","16/07","23/07","30/07","06/08","13/08","20/08","27/08","03/09","10/09","17/09","24/09","01/10","08/10","15/10","22/10","29/10","05/11","12/11","19/11","26/11","03/12","10/12","17/12","24/12"], rec:[0,0,4600,0,26085,43,2997,78,8718,28,11710,28,0,21697,78,0,16346,62,0,2997,78,37681,8,17484,22,0,3000,3000,11600,15333,33,400,14032,84,103601,09,2100,62566,66,24232,86,13344,13,10194,19,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],pag:[0,0,0,0,0,0,0,0,0,0,-19991,77,0,-66940,18,-2145,43,-5381,4,-19530,25,-65993,12,0,-2861,-21778,8,-65635,72,0,-7684,91,-121512,48,-37020,38,-15449,55,-6434,63,-34636,31,-36924,23,-593,46,-1811,6,-36601,31,-8375,77,-28580,64,-593,46,-4776,6,-33682,31,-36550,41,-593,46,-4672,6,-33636,31,-36596,41,-593,46,-1811,6,-28967,08,-15906,-28580,64,-593,46,-4672,6,-33682,31,-30419,87,-593,46],bal:[213755,05,213755,05,218355,05,218355,05,244440,48,247438,26,256156,54,267866,82,267866,82,289564,6,269572,83,285919,45,218979,27,219831,62,252132,02,250085,99,184092,87,187092,87,187231,87,177053,07,126750,68,127150,68,133498,61,115587,22,80666,84,127783,95,145582,18,124290,97559,96,96966,5,95154,9,58553,59,50177,82,21597,18,21003,72,16227,12,-17455,19,-54005,6,-54599,06,-59271,66,-92907,97,-129504,38,-130097,84,-131909,44,-160876,52,-176782,52,-205363,16,-205956,62,-210629,22,-244311,53,-274731,4,-275324,86]}};
-    var fmtV=function(v){var a=Math.abs(v);if(a>=1e6)return'R$ '+(v/1e6).toFixed(1).replace('.',',')+' M';if(a>=1000)return'R$ '+(v/1000).toFixed(0)+'K';return'R$ '+v.toFixed(0);};
-    var chart=new Chart(document.getElementById('chart_instituto').getContext('2d'),{
-      data:{labels:D.m.labels,datasets:[
-        {type:'bar', label:'Entradas',data:D.m.rec,backgroundColor:'rgba(67,160,71,.65)',borderColor:'#43a047',borderWidth:1,order:2},
-        {type:'bar', label:'Saidas',  data:D.m.pag,backgroundColor:'rgba(229,57,53,.55)',borderColor:'#e53935',borderWidth:1,order:2},
-        {type:'line',label:'Saldo Acum.',data:D.m.bal,borderColor:'#2196F3',backgroundColor:'transparent',
-         borderWidth:2.5,pointRadius:4,pointBackgroundColor:'#2196F3',tension:.3,yAxisID:'y2',order:1}
-      ]},
-      options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
-        plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return' '+c.dataset.label+': '+fmtV(c.parsed.y);}}}},
-        scales:{
-          x:{ticks:{color:'#555',font:{size:10},maxRotation:45},grid:{color:'rgba(0,0,0,.04)'}},
-          y:{ticks:{color:'#888',font:{size:10},callback:function(v){return fmtV(v);}},grid:{color:'rgba(0,0,0,.06)'}},
-          y2:{position:'right',ticks:{color:'#2196F3',font:{size:10},callback:function(v){return fmtV(v);}},grid:{drawOnChartArea:false}}
-        }
-      }
-    });
-    window.setView_chart_instituto=function(v){
-      ['m','s'].forEach(function(id){var b=document.getElementById(id==='m'?'btn_m_instituto':'btn_s_instituto');b.classList.toggle('active',id===v);});
-      chart.data.labels=D[v].labels;chart.data.datasets[0].data=D[v].rec;chart.data.datasets[1].data=D[v].pag;chart.data.datasets[2].data=D[v].bal;
-      chart.update('active');
-    };
-  })();
-  </script>
   <div class="section"><h3>Fluxo Mensal 2026</h3><div class="table-container"><table>
     <thead><tr><th>Mes</th><th style="text-align:right">A Receber</th><th style="text-align:right">A Pagar</th><th style="text-align:right">Liquido</th></tr></thead>
     <tbody><tr><td><strong>Jan</strong></td><td style='text-align:right;color:#2e7d32;font-weight:700'>R$ 30.685,43</td><td style='text-align:right;color:#c62828;font-weight:700'>R$ 0,00</td><td style='text-align:right;color:#2e7d32;font-weight:800'>+R$ 30.685,43</td></tr><tr><td><strong>Fev</strong></td><td style='text-align:right;color:#2e7d32;font-weight:700'>R$ 28.426,34</td><td style='text-align:right;color:#c62828;font-weight:700'>R$ 0,00</td><td style='text-align:right;color:#2e7d32;font-weight:800'>+R$ 28.426,34</td></tr><tr><td><strong>Mar</strong></td><td style='text-align:right;color:#2e7d32;font-weight:700'>R$ 36.042,18</td><td style='text-align:right;color:#c62828;font-weight:700'>R$ 87.164,15</td><td style='text-align:right;color:#c62828;font-weight:800'>R$ -51.121,97</td></tr><tr><td><strong>Abr</strong></td><td style='text-align:right;color:#2e7d32;font-weight:700'>R$ 58.166,02</td><td style='text-align:right;color:#c62828;font-weight:700'>R$ 92.818,00</td><td style='text-align:right;color:#c62828;font-weight:800'>R$ -34.651,98</td></tr><tr><td><strong>Mai</strong></td><td style='text-align:right;color:#2e7d32;font-weight:700'>R$ 39.333,33</td><td style='text-align:right;color:#c62828;font-weight:700'>R$ 90.275,52</td><td style='text-align:right;color:#c62828;font-weight:800'>R$ -50.942,19</td></tr><tr style='background:#f0f7ff'><td><strong>Jun</strong></td><td style='text-align:right;color:#2e7d32;font-weight:700'>R$ 186.300,61</td><td style='text-align:right;color:#c62828;font-weight:700'>R$ 185.240,95</td><td style='text-align:right;color:#2e7d32;font-weight:800'>+R$ 1.059,66</td></tr><tr><td><strong>Jul</strong></td><td style='text-align:right;color:#2e7d32;font-weight:700'>R$ 34.771,16</td><td style='text-align:right;color:#c62828;font-weight:700'>R$ 76.930,60</td><td style='text-align:right;color:#c62828;font-weight:800'>R$ -42.159,44</td></tr><tr><td><strong>Ago</strong></td><td style='text-align:right;color:#2e7d32;font-weight:700'>R$ 0,00</td><td style='text-align:right;color:#c62828;font-weight:700'>R$ 75.962,78</td><td style='text-align:right;color:#c62828;font-weight:800'>R$ -75.962,78</td></tr><tr><td><strong>Set</strong></td><td style='text-align:right;color:#2e7d32;font-weight:700'>R$ 0,00</td><td style='text-align:right;color:#c62828;font-weight:700'>R$ 75.498,78</td><td style='text-align:right;color:#c62828;font-weight:800'>R$ -75.498,78</td></tr><tr><td><strong>Out</strong></td><td style='text-align:right;color:#2e7d32;font-weight:700'>R$ 0,00</td><td style='text-align:right;color:#c62828;font-weight:700'>R$ 75.498,78</td><td style='text-align:right;color:#c62828;font-weight:800'>R$ -75.498,78</td></tr><tr><td><strong>Nov</strong></td><td style='text-align:right;color:#2e7d32;font-weight:700'>R$ 0,00</td><td style='text-align:right;color:#c62828;font-weight:700'>R$ 75.858,78</td><td style='text-align:right;color:#c62828;font-weight:800'>R$ -75.858,78</td></tr><tr><td><strong>Dez</strong></td><td style='text-align:right;color:#2e7d32;font-weight:700'>R$ 0,00</td><td style='text-align:right;color:#c62828;font-weight:700'>R$ 69.368,24</td><td style='text-align:right;color:#c62828;font-weight:800'>R$ -69.368,24</td></tr></tbody></table></div></div>
@@ -233,7 +174,7 @@ tbody td{padding:9px 12px;border-bottom:1px solid #f0f0f0;vertical-align:middle}
 </div><div id="telecom" class="tab-content">
   <div class="company-header" style="background:linear-gradient(135deg,#1b5e20,#43a047)">
     <h2>ICC Telecom</h2>
-    <p>Fluxo de Caixa 2026 &nbsp;&#183;&nbsp; Banco: R$ 0,00 &nbsp;&#183;&nbsp; Saldo Projetado: R$ 213.540,99</p>
+    <p>Fluxo de Caixa 2026 &#183; Banco: R$ 0,00 &#183; Saldo Projetado: R$ 213.540,99</p>
   </div>
   <div class="cards-grid">
     <div class="card"><div class="card-value" style="color:#1e3a5f">R$ 0,00</div><div class="card-label">Saldo Banco Atual</div></div>
@@ -241,12 +182,12 @@ tbody td{padding:9px 12px;border-bottom:1px solid #f0f0f0;vertical-align:middle}
     <div class="card red"><div class="card-value">R$ 439.235,05</div><div class="card-label">A Pagar (130 titulos)</div></div>
     <div class="card "><div class="card-value" style="color:#2e7d32">R$ 213.540,99</div><div class="card-label">Saldo Projetado</div></div>
   </div>
-    <div class="chart-section">
+  <div class="chart-section">
     <div class="chart-header">
       <h3>&#128200; Fluxo de Caixa &#8212; Entradas vs Saidas</h3>
       <div class="chart-toggles">
-        <button class="chart-toggle active" id="btn_m_telecom" onclick="setView_chart_telecom('m')">Mensal</button>
-        <button class="chart-toggle"        id="btn_s_telecom" onclick="setView_chart_telecom('s')">Semanal</button>
+        <button class="chart-toggle active" id="btn_m_telecom" onclick="setView('telecom','m')">Mensal</button>
+        <button class="chart-toggle"        id="btn_s_telecom" onclick="setView('telecom','s')">Semanal</button>
       </div>
     </div>
     <div class="chart-wrap"><canvas id="chart_telecom"></canvas></div>
@@ -256,34 +197,6 @@ tbody td{padding:9px 12px;border-bottom:1px solid #f0f0f0;vertical-align:middle}
       <span><span class="legend-line" style="background:#43a047"></span>Saldo Acumulado</span>
     </div>
   </div>
-  <script>
-  (function(){
-    var D={m:{labels:["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"],rec:[20713,6,20200,38664,56,64668,04,88376,42,351716,32,46370,44,5826,66,4060,4060,4060,4060],pag:[-9310,68,0,-5959,07,-11623,25,-53887,83,-92129,19,-48301,28,-45318,37,-44325,19,-43150,83,-43370,83,-41858,53],bal:[11402,92,31602,92,64308,41,117353,2,151841,79,411428,92,409498,08,370006,37,329741,18,290650,35,251339,52,213540,99]},
-           s:{labels:["01/01","08/01","15/01","22/01","29/01","05/02","12/02","19/02","26/02","05/03","12/03","19/03","26/03","02/04","09/04","16/04","23/04","30/04","07/05","14/05","21/05","28/05","04/06","11/06","18/06","25/06","02/07","09/07","16/07","23/07","30/07","06/08","13/08","20/08","27/08","03/09","10/09","17/09","24/09","01/10","08/10","15/10","22/10","29/10","05/11","12/11","19/11","26/11","03/12","10/12","17/12","24/12"], rec:[0,0,0,2000,9425,6,9288,6750,2700,3250,7500,1600,0,20897,88,16166,68,0,6564,56,4650,53453,48,25500,2266,68,12966,66,29943,08,44642,71,47286,05,109015,43,119699,03,50773,1,10500,28535,26,3568,52,1766,66,0,4060,0,1766,66,0,4060,0,0,0,4060,0,0,0,0,4060,0,0,0,4060,0,0],pag:[0,-7125,0,-2185,68,0,0,0,0,0,-14,35,-5944,72,0,0,-3695,16,-5646,9,0,0,-2281,19,-363,64,-16284,28,-138,7,-37101,21,-29453,07,-54940,05,-470,-4860,39,-2655,68,-35625,94,-5260,51,-4509,15,-2655,68,-35625,94,-5260,51,-1556,24,-2655,68,-470,-40416,45,-470,-783,06,-2405,68,-35375,94,-5010,51,-358,7,-2405,68,-10583,64,-29802,81,-220,-358,7,-2405,68,-38874,15,-220,-358,7],bal:[0,-7125,-7125,-7310,68,2114,92,11402,92,18152,92,20852,92,24102,92,31588,57,27243,85,27243,85,48141,73,60613,25,54966,35,61530,91,66180,91,117353,2,142489,56,128471,96,141299,92,134141,79,149331,43,141677,43,250222,86,365061,5,413178,92,388052,98,411327,73,410387,1,409498,08,373872,14,372671,63,371115,39,370226,37,369756,37,333399,92,332929,92,332146,86,329741,18,298425,24,293414,73,293056,03,290650,35,280066,71,254323,9,254103,9,253745,2,251339,52,216525,37,216305,37,215946,67]}};
-    var fmtV=function(v){var a=Math.abs(v);if(a>=1e6)return'R$ '+(v/1e6).toFixed(1).replace('.',',')+' M';if(a>=1000)return'R$ '+(v/1000).toFixed(0)+'K';return'R$ '+v.toFixed(0);};
-    var chart=new Chart(document.getElementById('chart_telecom').getContext('2d'),{
-      data:{labels:D.m.labels,datasets:[
-        {type:'bar', label:'Entradas',data:D.m.rec,backgroundColor:'rgba(67,160,71,.65)',borderColor:'#43a047',borderWidth:1,order:2},
-        {type:'bar', label:'Saidas',  data:D.m.pag,backgroundColor:'rgba(229,57,53,.55)',borderColor:'#e53935',borderWidth:1,order:2},
-        {type:'line',label:'Saldo Acum.',data:D.m.bal,borderColor:'#43a047',backgroundColor:'transparent',
-         borderWidth:2.5,pointRadius:4,pointBackgroundColor:'#43a047',tension:.3,yAxisID:'y2',order:1}
-      ]},
-      options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
-        plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return' '+c.dataset.label+': '+fmtV(c.parsed.y);}}}},
-        scales:{
-          x:{ticks:{color:'#555',font:{size:10},maxRotation:45},grid:{color:'rgba(0,0,0,.04)'}},
-          y:{ticks:{color:'#888',font:{size:10},callback:function(v){return fmtV(v);}},grid:{color:'rgba(0,0,0,.06)'}},
-          y2:{position:'right',ticks:{color:'#43a047',font:{size:10},callback:function(v){return fmtV(v);}},grid:{drawOnChartArea:false}}
-        }
-      }
-    });
-    window.setView_chart_telecom=function(v){
-      ['m','s'].forEach(function(id){var b=document.getElementById(id==='m'?'btn_m_telecom':'btn_s_telecom');b.classList.toggle('active',id===v);});
-      chart.data.labels=D[v].labels;chart.data.datasets[0].data=D[v].rec;chart.data.datasets[1].data=D[v].pag;chart.data.datasets[2].data=D[v].bal;
-      chart.update('active');
-    };
-  })();
-  </script>
   <div class="section"><h3>Fluxo Mensal 2026</h3><div class="table-container"><table>
     <thead><tr><th>Mes</th><th style="text-align:right">A Receber</th><th style="text-align:right">A Pagar</th><th style="text-align:right">Liquido</th></tr></thead>
     <tbody><tr><td><strong>Jan</strong></td><td style='text-align:right;color:#2e7d32;font-weight:700'>R$ 20.713,60</td><td style='text-align:right;color:#c62828;font-weight:700'>R$ 9.310,68</td><td style='text-align:right;color:#2e7d32;font-weight:800'>+R$ 11.402,92</td></tr><tr><td><strong>Fev</strong></td><td style='text-align:right;color:#2e7d32;font-weight:700'>R$ 20.200,00</td><td style='text-align:right;color:#c62828;font-weight:700'>R$ 0,00</td><td style='text-align:right;color:#2e7d32;font-weight:800'>+R$ 20.200,00</td></tr><tr><td><strong>Mar</strong></td><td style='text-align:right;color:#2e7d32;font-weight:700'>R$ 38.664,56</td><td style='text-align:right;color:#c62828;font-weight:700'>R$ 5.959,07</td><td style='text-align:right;color:#2e7d32;font-weight:800'>+R$ 32.705,49</td></tr><tr><td><strong>Abr</strong></td><td style='text-align:right;color:#2e7d32;font-weight:700'>R$ 64.668,04</td><td style='text-align:right;color:#c62828;font-weight:700'>R$ 11.623,25</td><td style='text-align:right;color:#2e7d32;font-weight:800'>+R$ 53.044,79</td></tr><tr><td><strong>Mai</strong></td><td style='text-align:right;color:#2e7d32;font-weight:700'>R$ 88.376,42</td><td style='text-align:right;color:#c62828;font-weight:700'>R$ 53.887,83</td><td style='text-align:right;color:#2e7d32;font-weight:800'>+R$ 34.488,59</td></tr><tr style='background:#f0f7ff'><td><strong>Jun</strong></td><td style='text-align:right;color:#2e7d32;font-weight:700'>R$ 351.716,32</td><td style='text-align:right;color:#c62828;font-weight:700'>R$ 92.129,19</td><td style='text-align:right;color:#2e7d32;font-weight:800'>+R$ 259.587,13</td></tr><tr><td><strong>Jul</strong></td><td style='text-align:right;color:#2e7d32;font-weight:700'>R$ 46.370,44</td><td style='text-align:right;color:#c62828;font-weight:700'>R$ 48.301,28</td><td style='text-align:right;color:#c62828;font-weight:800'>R$ -1.930,84</td></tr><tr><td><strong>Ago</strong></td><td style='text-align:right;color:#2e7d32;font-weight:700'>R$ 5.826,66</td><td style='text-align:right;color:#c62828;font-weight:700'>R$ 45.318,37</td><td style='text-align:right;color:#c62828;font-weight:800'>R$ -39.491,71</td></tr><tr><td><strong>Set</strong></td><td style='text-align:right;color:#2e7d32;font-weight:700'>R$ 4.060,00</td><td style='text-align:right;color:#c62828;font-weight:700'>R$ 44.325,19</td><td style='text-align:right;color:#c62828;font-weight:800'>R$ -40.265,19</td></tr><tr><td><strong>Out</strong></td><td style='text-align:right;color:#2e7d32;font-weight:700'>R$ 4.060,00</td><td style='text-align:right;color:#c62828;font-weight:700'>R$ 43.150,83</td><td style='text-align:right;color:#c62828;font-weight:800'>R$ -39.090,83</td></tr><tr><td><strong>Nov</strong></td><td style='text-align:right;color:#2e7d32;font-weight:700'>R$ 4.060,00</td><td style='text-align:right;color:#c62828;font-weight:700'>R$ 43.370,83</td><td style='text-align:right;color:#c62828;font-weight:800'>R$ -39.310,83</td></tr><tr><td><strong>Dez</strong></td><td style='text-align:right;color:#2e7d32;font-weight:700'>R$ 4.060,00</td><td style='text-align:right;color:#c62828;font-weight:700'>R$ 41.858,53</td><td style='text-align:right;color:#c62828;font-weight:800'>R$ -37.798,53</td></tr></tbody></table></div></div>
@@ -296,7 +209,7 @@ tbody td{padding:9px 12px;border-bottom:1px solid #f0f0f0;vertical-align:middle}
 </div><div id="medical" class="tab-content">
   <div class="company-header" style="background:linear-gradient(135deg,#4a148c,#8e24aa)">
     <h2>ICC Medical</h2>
-    <p>Fluxo de Caixa 2026 &nbsp;&#183;&nbsp; Banco: R$ 0,00 &nbsp;&#183;&nbsp; Saldo Projetado: R$ -223.271,78</p>
+    <p>Fluxo de Caixa 2026 &#183; Banco: R$ 0,00 &#183; Saldo Projetado: R$ -223.271,78</p>
   </div>
   <div class="cards-grid">
     <div class="card"><div class="card-value" style="color:#1e3a5f">R$ 0,00</div><div class="card-label">Saldo Banco Atual</div></div>
@@ -304,12 +217,12 @@ tbody td{padding:9px 12px;border-bottom:1px solid #f0f0f0;vertical-align:middle}
     <div class="card red"><div class="card-value">R$ 525.552,12</div><div class="card-label">A Pagar (105 titulos)</div></div>
     <div class="card red"><div class="card-value" style="color:#c62828">R$ -223.271,78</div><div class="card-label">Saldo Projetado</div></div>
   </div>
-    <div class="chart-section">
+  <div class="chart-section">
     <div class="chart-header">
       <h3>&#128200; Fluxo de Caixa &#8212; Entradas vs Saidas</h3>
       <div class="chart-toggles">
-        <button class="chart-toggle active" id="btn_m_medical" onclick="setView_chart_medical('m')">Mensal</button>
-        <button class="chart-toggle"        id="btn_s_medical" onclick="setView_chart_medical('s')">Semanal</button>
+        <button class="chart-toggle active" id="btn_m_medical" onclick="setView('medical','m')">Mensal</button>
+        <button class="chart-toggle"        id="btn_s_medical" onclick="setView('medical','s')">Semanal</button>
       </div>
     </div>
     <div class="chart-wrap"><canvas id="chart_medical"></canvas></div>
@@ -319,34 +232,6 @@ tbody td{padding:9px 12px;border-bottom:1px solid #f0f0f0;vertical-align:middle}
       <span><span class="legend-line" style="background:#8e24aa"></span>Saldo Acumulado</span>
     </div>
   </div>
-  <script>
-  (function(){
-    var D={m:{labels:["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"],rec:[1001,28,13001,28,11409,03,9693,78,21413,78,226077,78,17680,85,1001,28,1001,28,0,0,0],pag:[0,0,0,0,0,-79830,6,-76665,2,-74790,2,-74790,2,-73158,64,-73158,64,-73158,64],bal:[1001,28,14002,56,25411,59,35105,37,56519,15,202766,33,143781,98,69993,06,-3795,86,-76954,5,-150113,14,-223271,78]},
-           s:{labels:["01/01","08/01","15/01","22/01","29/01","05/02","12/02","19/02","26/02","05/03","12/03","19/03","26/03","02/04","09/04","16/04","23/04","30/04","07/05","14/05","21/05","28/05","04/06","11/06","18/06","25/06","02/07","09/07","16/07","23/07","30/07","06/08","13/08","20/08","27/08","03/09","10/09","17/09","24/09","01/10","08/10","15/10","22/10","29/10","05/11","12/11","19/11","26/11","03/12","10/12","17/12","24/12"], rec:[0,0,0,1001,28,0,0,0,7000,1001,28,5000,0,1407,75,5001,28,5000,0,4692,5,5001,28,0,0,0,1001,28,7145,83,30369,44,29166,66,89427,91,74567,94,23812,5,6333,32,2346,25,1001,28,0,0,0,1001,28,0,0,0,0,1001,28,0,0,0,0,0,0,0,0,0,0,0,0,0],pag:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-49006,56,-4852,3,-23491,74,-2480,-41375,-4631,56,-28178,64,0,-37651,93,-8959,63,-28178,64,0,-2480,-44131,56,0,-28178,64,-2480,-39500,-3000,-28178,64,0,-37651,93,-7328,07,-4686,9,-23491,74,-2480,-42500,0,-28178,64],bal:[0,0,0,1001,28,1001,28,1001,28,1001,28,8001,28,9002,56,14002,56,14002,56,15410,31,20411,59,25411,59,25411,59,30104,09,35105,37,35105,37,35105,37,35105,37,36106,65,43252,48,73621,92,53782,02,138357,63,189433,83,210766,33,175724,65,173439,34,146261,98,146261,98,108610,05,99650,42,72473,06,72473,06,69993,06,25861,5,25861,5,-1315,86,-3795,86,-43295,86,-46295,86,-74474,5,-74474,5,-112126,43,-119454,5,-124141,4,-147633,14,-150113,14,-192613,14,-192613,14,-220791,78]}};
-    var fmtV=function(v){var a=Math.abs(v);if(a>=1e6)return'R$ '+(v/1e6).toFixed(1).replace('.',',')+' M';if(a>=1000)return'R$ '+(v/1000).toFixed(0)+'K';return'R$ '+v.toFixed(0);};
-    var chart=new Chart(document.getElementById('chart_medical').getContext('2d'),{
-      data:{labels:D.m.labels,datasets:[
-        {type:'bar', label:'Entradas',data:D.m.rec,backgroundColor:'rgba(67,160,71,.65)',borderColor:'#43a047',borderWidth:1,order:2},
-        {type:'bar', label:'Saidas',  data:D.m.pag,backgroundColor:'rgba(229,57,53,.55)',borderColor:'#e53935',borderWidth:1,order:2},
-        {type:'line',label:'Saldo Acum.',data:D.m.bal,borderColor:'#8e24aa',backgroundColor:'transparent',
-         borderWidth:2.5,pointRadius:4,pointBackgroundColor:'#8e24aa',tension:.3,yAxisID:'y2',order:1}
-      ]},
-      options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
-        plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return' '+c.dataset.label+': '+fmtV(c.parsed.y);}}}},
-        scales:{
-          x:{ticks:{color:'#555',font:{size:10},maxRotation:45},grid:{color:'rgba(0,0,0,.04)'}},
-          y:{ticks:{color:'#888',font:{size:10},callback:function(v){return fmtV(v);}},grid:{color:'rgba(0,0,0,.06)'}},
-          y2:{position:'right',ticks:{color:'#8e24aa',font:{size:10},callback:function(v){return fmtV(v);}},grid:{drawOnChartArea:false}}
-        }
-      }
-    });
-    window.setView_chart_medical=function(v){
-      ['m','s'].forEach(function(id){var b=document.getElementById(id==='m'?'btn_m_medical':'btn_s_medical');b.classList.toggle('active',id===v);});
-      chart.data.labels=D[v].labels;chart.data.datasets[0].data=D[v].rec;chart.data.datasets[1].data=D[v].pag;chart.data.datasets[2].data=D[v].bal;
-      chart.update('active');
-    };
-  })();
-  </script>
   <div class="section"><h3>Fluxo Mensal 2026</h3><div class="table-container"><table>
     <thead><tr><th>Mes</th><th style="text-align:right">A Receber</th><th style="text-align:right">A Pagar</th><th style="text-align:right">Liquido</th></tr></thead>
     <tbody><tr><td><strong>Jan</strong></td><td style='text-align:right;color:#2e7d32;font-weight:700'>R$ 1.001,28</td><td style='text-align:right;color:#c62828;font-weight:700'>R$ 0,00</td><td style='text-align:right;color:#2e7d32;font-weight:800'>+R$ 1.001,28</td></tr><tr><td><strong>Fev</strong></td><td style='text-align:right;color:#2e7d32;font-weight:700'>R$ 13.001,28</td><td style='text-align:right;color:#c62828;font-weight:700'>R$ 0,00</td><td style='text-align:right;color:#2e7d32;font-weight:800'>+R$ 13.001,28</td></tr><tr><td><strong>Mar</strong></td><td style='text-align:right;color:#2e7d32;font-weight:700'>R$ 11.409,03</td><td style='text-align:right;color:#c62828;font-weight:700'>R$ 0,00</td><td style='text-align:right;color:#2e7d32;font-weight:800'>+R$ 11.409,03</td></tr><tr><td><strong>Abr</strong></td><td style='text-align:right;color:#2e7d32;font-weight:700'>R$ 9.693,78</td><td style='text-align:right;color:#c62828;font-weight:700'>R$ 0,00</td><td style='text-align:right;color:#2e7d32;font-weight:800'>+R$ 9.693,78</td></tr><tr><td><strong>Mai</strong></td><td style='text-align:right;color:#2e7d32;font-weight:700'>R$ 21.413,78</td><td style='text-align:right;color:#c62828;font-weight:700'>R$ 0,00</td><td style='text-align:right;color:#2e7d32;font-weight:800'>+R$ 21.413,78</td></tr><tr style='background:#f0f7ff'><td><strong>Jun</strong></td><td style='text-align:right;color:#2e7d32;font-weight:700'>R$ 226.077,78</td><td style='text-align:right;color:#c62828;font-weight:700'>R$ 79.830,60</td><td style='text-align:right;color:#2e7d32;font-weight:800'>+R$ 146.247,18</td></tr><tr><td><strong>Jul</strong></td><td style='text-align:right;color:#2e7d32;font-weight:700'>R$ 17.680,85</td><td style='text-align:right;color:#c62828;font-weight:700'>R$ 76.665,20</td><td style='text-align:right;color:#c62828;font-weight:800'>R$ -58.984,35</td></tr><tr><td><strong>Ago</strong></td><td style='text-align:right;color:#2e7d32;font-weight:700'>R$ 1.001,28</td><td style='text-align:right;color:#c62828;font-weight:700'>R$ 74.790,20</td><td style='text-align:right;color:#c62828;font-weight:800'>R$ -73.788,92</td></tr><tr><td><strong>Set</strong></td><td style='text-align:right;color:#2e7d32;font-weight:700'>R$ 1.001,28</td><td style='text-align:right;color:#c62828;font-weight:700'>R$ 74.790,20</td><td style='text-align:right;color:#c62828;font-weight:800'>R$ -73.788,92</td></tr><tr><td><strong>Out</strong></td><td style='text-align:right;color:#2e7d32;font-weight:700'>R$ 0,00</td><td style='text-align:right;color:#c62828;font-weight:700'>R$ 73.158,64</td><td style='text-align:right;color:#c62828;font-weight:800'>R$ -73.158,64</td></tr><tr><td><strong>Nov</strong></td><td style='text-align:right;color:#2e7d32;font-weight:700'>R$ 0,00</td><td style='text-align:right;color:#c62828;font-weight:700'>R$ 73.158,64</td><td style='text-align:right;color:#c62828;font-weight:800'>R$ -73.158,64</td></tr><tr><td><strong>Dez</strong></td><td style='text-align:right;color:#2e7d32;font-weight:700'>R$ 0,00</td><td style='text-align:right;color:#c62828;font-weight:700'>R$ 73.158,64</td><td style='text-align:right;color:#c62828;font-weight:800'>R$ -73.158,64</td></tr></tbody></table></div></div>
@@ -359,12 +244,86 @@ tbody td{padding:9px 12px;border-bottom:1px solid #f0f0f0;vertical-align:middle}
 </div>
 
 <script>
-function showTab(id){
-  document.querySelectorAll('.tab-content').forEach(function(t){t.classList.remove('active')});
-  document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active')});
-  document.getElementById(id).classList.add('active');
-  document.querySelectorAll('.tab-btn').forEach(function(btn){if(btn.getAttribute('data-tab')===id)btn.classList.add('active')});
+var CHART_DATA = {
+  consolidado: { dot:'#1e3a5f', m:{ labels:["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"], rec:[52400,31,61627,62,86115,77,132527,84,149123,53,764094,71,98822,45,6827,94,5061,28,4060,4060,4060], pag:[-9310,68,0,-93123,22,-104441,25,-144163,35,-357200,74,-201897,08,-196071,35,-194614,17,-191808,25,-192388,25,-184385,41], bal:[256844,68,318472,3,311464,85,339551,44,344511,62,751405,59,648330,96,459087,55,269534,66,81786,41,-106541,84,-286867,25] }, s:{ labels:["01/01","08/01","15/01","22/01","29/01","05/02","12/02","19/02","26/02","05/03","12/03","19/03","26/03","02/04","09/04","16/04","23/04","30/04","07/05","14/05","21/05","28/05","04/06","11/06","18/06","25/06","02/07","09/07","16/07","23/07","30/07","06/08","13/08","20/08","27/08","03/09","10/09","17/09","24/09","01/10","08/10","15/10","22/10","29/10","05/11","12/11","19/11","26/11","03/12","10/12","17/12","24/12"], rec:[0,0,4600,3001,28,35511,03,12285,78,15468,28,21410,28,4251,28,34197,78,1600,17754,37,25899,16,24164,46,37681,8,28741,28,9651,28,56453,48,28500,13866,68,29301,27,37488,91,89044,99,180053,8,200543,34,256833,63,98818,46,30177,45,41075,7,4569,8,1766,66,0,4060,1001,28,1766,66,0,4060,0,1001,28,0,4060,0,0,0,0,4060,0,0,0,4060,0,0], pag:[0,-7125,0,-2185,68,0,0,0,0,0,-14,35,-25936,49,0,-66940,18,-5840,59,-11028,3,-19530,25,-65993,12,-2281,19,-3224,64,-38063,08,-65774,42,-37101,21,-37137,98,-225459,09,-42342,68,-43801,68,-11570,31,-111637,25,-46816,3,-33281,25,-4467,28,-109879,18,-22595,91,-58315,52,-3249,14,-7726,6,-118230,32,-37020,41,-29555,16,-9558,28,-108512,25,-44606,92,-29130,8,-4217,28,-77202,65,-53036,88,-33487,54,-24443,9,-9558,28,-115056,46,-30639,87,-29130,8], bal:[213755,05,206630,05,211230,05,212045,65,247556,68,259842,46,275310,74,296721,02,300972,3,335155,73,310819,24,328573,61,287532,59,305856,46,332509,96,341720,99,285379,15,339551,44,364826,8,340630,4,304157,25,304544,95,356451,96,311046,67,469247,33,682279,28,769527,43,688067,63,682327,03,653615,58,650914,96,541035,78,522499,87,465185,63,463703,15,455976,55,341806,23,304785,82,276231,94,266673,66,162221,41,117614,49,88483,69,84266,41,7063,76,-41913,12,-75400,66,-99844,56,-109402,84,-220399,3,-251039,17,-280169,97] } },
+  instituto: { dot:'#2196F3', m:{ labels:["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"], rec:[30685,43,28426,34,36042,18,58166,02,39333,33,186300,61,34771,16,0,0,0,0,0], pag:[0,0,-87164,15,-92818,-90275,52,-185240,95,-76930,6,-75962,78,-75498,78,-75498,78,-75858,78,-69368,24], bal:[244440,48,272866,82,221744,85,187092,87,136150,68,137210,34,95050,9,19088,12,-56410,66,-131909,44,-207768,22,-277136,46] }, s:{ labels:["01/01","08/01","15/01","22/01","29/01","05/02","12/02","19/02","26/02","05/03","12/03","19/03","26/03","02/04","09/04","16/04","23/04","30/04","07/05","14/05","21/05","28/05","04/06","11/06","18/06","25/06","02/07","09/07","16/07","23/07","30/07","06/08","13/08","20/08","27/08","03/09","10/09","17/09","24/09","01/10","08/10","15/10","22/10","29/10","05/11","12/11","19/11","26/11","03/12","10/12","17/12","24/12"], rec:[0,0,4600,0,26085,43,2997,78,8718,28,11710,28,0,21697,78,0,16346,62,0,2997,78,37681,8,17484,22,0,3000,3000,11600,15333,33,400,14032,84,103601,09,2100,62566,66,24232,86,13344,13,10194,19,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], pag:[0,0,0,0,0,0,0,0,0,0,-19991,77,0,-66940,18,-2145,43,-5381,4,-19530,25,-65993,12,0,-2861,-21778,8,-65635,72,0,-7684,91,-121512,48,-37020,38,-15449,55,-6434,63,-34636,31,-36924,23,-593,46,-1811,6,-36601,31,-8375,77,-28580,64,-593,46,-4776,6,-33682,31,-36550,41,-593,46,-4672,6,-33636,31,-36596,41,-593,46,-1811,6,-28967,08,-15906,-28580,64,-593,46,-4672,6,-33682,31,-30419,87,-593,46], bal:[213755,05,213755,05,218355,05,218355,05,244440,48,247438,26,256156,54,267866,82,267866,82,289564,6,269572,83,285919,45,218979,27,219831,62,252132,02,250085,99,184092,87,187092,87,187231,87,177053,07,126750,68,127150,68,133498,61,115587,22,80666,84,127783,95,145582,18,124290,97559,96,96966,5,95154,9,58553,59,50177,82,21597,18,21003,72,16227,12,-17455,19,-54005,6,-54599,06,-59271,66,-92907,97,-129504,38,-130097,84,-131909,44,-160876,52,-176782,52,-205363,16,-205956,62,-210629,22,-244311,53,-274731,4,-275324,86] } },
+  telecom: { dot:'#43a047', m:{ labels:["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"], rec:[20713,6,20200,38664,56,64668,04,88376,42,351716,32,46370,44,5826,66,4060,4060,4060,4060], pag:[-9310,68,0,-5959,07,-11623,25,-53887,83,-92129,19,-48301,28,-45318,37,-44325,19,-43150,83,-43370,83,-41858,53], bal:[11402,92,31602,92,64308,41,117353,2,151841,79,411428,92,409498,08,370006,37,329741,18,290650,35,251339,52,213540,99] }, s:{ labels:["01/01","08/01","15/01","22/01","29/01","05/02","12/02","19/02","26/02","05/03","12/03","19/03","26/03","02/04","09/04","16/04","23/04","30/04","07/05","14/05","21/05","28/05","04/06","11/06","18/06","25/06","02/07","09/07","16/07","23/07","30/07","06/08","13/08","20/08","27/08","03/09","10/09","17/09","24/09","01/10","08/10","15/10","22/10","29/10","05/11","12/11","19/11","26/11","03/12","10/12","17/12","24/12"], rec:[0,0,0,2000,9425,6,9288,6750,2700,3250,7500,1600,0,20897,88,16166,68,0,6564,56,4650,53453,48,25500,2266,68,12966,66,29943,08,44642,71,47286,05,109015,43,119699,03,50773,1,10500,28535,26,3568,52,1766,66,0,4060,0,1766,66,0,4060,0,0,0,4060,0,0,0,0,4060,0,0,0,4060,0,0], pag:[0,-7125,0,-2185,68,0,0,0,0,0,-14,35,-5944,72,0,0,-3695,16,-5646,9,0,0,-2281,19,-363,64,-16284,28,-138,7,-37101,21,-29453,07,-54940,05,-470,-4860,39,-2655,68,-35625,94,-5260,51,-4509,15,-2655,68,-35625,94,-5260,51,-1556,24,-2655,68,-470,-40416,45,-470,-783,06,-2405,68,-35375,94,-5010,51,-358,7,-2405,68,-10583,64,-29802,81,-220,-358,7,-2405,68,-38874,15,-220,-358,7], bal:[0,-7125,-7125,-7310,68,2114,92,11402,92,18152,92,20852,92,24102,92,31588,57,27243,85,27243,85,48141,73,60613,25,54966,35,61530,91,66180,91,117353,2,142489,56,128471,96,141299,92,134141,79,149331,43,141677,43,250222,86,365061,5,413178,92,388052,98,411327,73,410387,1,409498,08,373872,14,372671,63,371115,39,370226,37,369756,37,333399,92,332929,92,332146,86,329741,18,298425,24,293414,73,293056,03,290650,35,280066,71,254323,9,254103,9,253745,2,251339,52,216525,37,216305,37,215946,67] } },
+  medical: { dot:'#8e24aa', m:{ labels:["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"], rec:[1001,28,13001,28,11409,03,9693,78,21413,78,226077,78,17680,85,1001,28,1001,28,0,0,0], pag:[0,0,0,0,0,-79830,6,-76665,2,-74790,2,-74790,2,-73158,64,-73158,64,-73158,64], bal:[1001,28,14002,56,25411,59,35105,37,56519,15,202766,33,143781,98,69993,06,-3795,86,-76954,5,-150113,14,-223271,78] }, s:{ labels:["01/01","08/01","15/01","22/01","29/01","05/02","12/02","19/02","26/02","05/03","12/03","19/03","26/03","02/04","09/04","16/04","23/04","30/04","07/05","14/05","21/05","28/05","04/06","11/06","18/06","25/06","02/07","09/07","16/07","23/07","30/07","06/08","13/08","20/08","27/08","03/09","10/09","17/09","24/09","01/10","08/10","15/10","22/10","29/10","05/11","12/11","19/11","26/11","03/12","10/12","17/12","24/12"], rec:[0,0,0,1001,28,0,0,0,7000,1001,28,5000,0,1407,75,5001,28,5000,0,4692,5,5001,28,0,0,0,1001,28,7145,83,30369,44,29166,66,89427,91,74567,94,23812,5,6333,32,2346,25,1001,28,0,0,0,1001,28,0,0,0,0,1001,28,0,0,0,0,0,0,0,0,0,0,0,0,0], pag:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-49006,56,-4852,3,-23491,74,-2480,-41375,-4631,56,-28178,64,0,-37651,93,-8959,63,-28178,64,0,-2480,-44131,56,0,-28178,64,-2480,-39500,-3000,-28178,64,0,-37651,93,-7328,07,-4686,9,-23491,74,-2480,-42500,0,-28178,64], bal:[0,0,0,1001,28,1001,28,1001,28,1001,28,8001,28,9002,56,14002,56,14002,56,15410,31,20411,59,25411,59,25411,59,30104,09,35105,37,35105,37,35105,37,35105,37,36106,65,43252,48,73621,92,53782,02,138357,63,189433,83,210766,33,175724,65,173439,34,146261,98,146261,98,108610,05,99650,42,72473,06,72473,06,69993,06,25861,5,25861,5,-1315,86,-3795,86,-43295,86,-46295,86,-74474,5,-74474,5,-112126,43,-119454,5,-124141,4,-147633,14,-150113,14,-192613,14,-192613,14,-220791,78] } },
+};
+
+var CHARTS = {};
+var VIEWS  = {};
+
+var fmtV = function(v){
+  var a = Math.abs(v);
+  if(a >= 1e6) return 'R$ '+(v/1e6).toFixed(1).replace('.',',')+' M';
+  if(a >= 1e3) return 'R$ '+(v/1e3).toFixed(0)+'K';
+  return 'R$ '+v.toFixed(0);
+};
+
+function buildChart(id) {
+  if (CHARTS[id]) return;
+  var D   = CHART_DATA[id];
+  var ctx = document.getElementById('chart_'+id);
+  if (!ctx) return;
+  VIEWS[id] = 'm';
+  CHARTS[id] = new Chart(ctx.getContext('2d'), {
+    data: {
+      labels: D.m.labels,
+      datasets: [
+        { type:'bar',  label:'Entradas', data: D.m.rec,
+          backgroundColor:'rgba(67,160,71,.65)', borderColor:'#43a047', borderWidth:1, order:2 },
+        { type:'bar',  label:'Saidas',   data: D.m.pag,
+          backgroundColor:'rgba(229,57,53,.55)', borderColor:'#e53935', borderWidth:1, order:2 },
+        { type:'line', label:'Saldo Acumulado', data: D.m.bal,
+          borderColor: D.dot, backgroundColor:'transparent',
+          borderWidth:2.5, pointRadius:4, pointBackgroundColor: D.dot,
+          tension:0.3, yAxisID:'y2', order:1 }
+      ]
+    },
+    options: {
+      responsive:true, maintainAspectRatio:false,
+      interaction:{ mode:'index', intersect:false },
+      plugins:{
+        legend:{ display:false },
+        tooltip:{ callbacks:{ label:function(c){ return ' '+c.dataset.label+': '+fmtV(c.parsed.y); } } }
+      },
+      scales:{
+        x:{ ticks:{ color:'#555', font:{size:10}, maxRotation:45 }, grid:{ color:'rgba(0,0,0,.04)' } },
+        y:{ ticks:{ color:'#888', font:{size:10}, callback:function(v){ return fmtV(v); } }, grid:{ color:'rgba(0,0,0,.06)' } },
+        y2:{ position:'right', ticks:{ color: D.dot, font:{size:10}, callback:function(v){ return fmtV(v); } }, grid:{ drawOnChartArea:false } }
+      }
+    }
+  });
 }
+
+function setView(id, v) {
+  if (!CHARTS[id]) buildChart(id);
+  VIEWS[id] = v;
+  var D = CHART_DATA[id];
+  var ch = CHARTS[id];
+  document.getElementById('btn_m_'+id).classList.toggle('active', v==='m');
+  document.getElementById('btn_s_'+id).classList.toggle('active', v==='s');
+  ch.data.labels            = D[v].labels;
+  ch.data.datasets[0].data  = D[v].rec;
+  ch.data.datasets[1].data  = D[v].pag;
+  ch.data.datasets[2].data  = D[v].bal;
+  ch.update('active');
+}
+
+function showTab(id) {
+  document.querySelectorAll('.tab-content').forEach(function(t){ t.classList.remove('active'); });
+  document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach(function(btn){
+    if(btn.getAttribute('data-tab')===id) btn.classList.add('active');
+  });
+  // Build chart after tab is visible (fixes display:none issue)
+  setTimeout(function(){ buildChart(id); }, 50);
+}
+
+// Init consolidado chart on load (already visible)
+window.addEventListener('load', function(){ buildChart('consolidado'); });
 </script>
 </body>
 </html>
