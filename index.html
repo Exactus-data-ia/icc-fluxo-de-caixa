@@ -74,7 +74,84 @@ tbody td{padding:9px 12px;border-bottom:1px solid #f0f0f0;vertical-align:middle}
     <div class="card red"><div class="card-value">R$ 1.869.403,75</div><div class="card-label">Total a Pagar (2026)</div></div>
     <div class="card red"><div class="card-value" style="color:#c62828">R$ -286.867,25</div><div class="card-label">Saldo Projetado Final</div></div>
   </div>
-  <div class="curr-card">
+  
+<!-- ═══ CHART BLOCK ═══ -->
+<div class="section" style="margin-bottom:18px">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid #f0f2f5">
+    <h3 style="border:none;padding:0;margin:0">&#128200; Fluxo de Caixa Consolidado &#8212; Entradas vs Saidas</h3>
+    <div style="display:flex;gap:6px">
+      <button onclick="setView('mensal')" id="btn-mensal" style="padding:5px 14px;border:2px solid #1e3a5f;border-radius:20px;background:#1e3a5f;color:white;font-size:12px;font-weight:700;cursor:pointer">Mensal</button>
+      <button onclick="setView('semanal')" id="btn-semanal" style="padding:5px 14px;border:2px solid #1e3a5f;border-radius:20px;background:white;color:#1e3a5f;font-size:12px;font-weight:700;cursor:pointer">Semanal</button>
+    </div>
+  </div>
+  <div style="position:relative;height:320px">
+    <canvas id="mainChart"></canvas>
+  </div>
+  <div style="display:flex;gap:20px;justify-content:center;margin-top:12px;font-size:11px;color:#666">
+    <span><span style="display:inline-block;width:12px;height:12px;background:#43a047;border-radius:2px;margin-right:4px;vertical-align:middle"></span>Entradas (A Receber)</span>
+    <span><span style="display:inline-block;width:12px;height:12px;background:#e53935;border-radius:2px;margin-right:4px;vertical-align:middle"></span>Saidas (A Pagar)</span>
+    <span><span style="display:inline-block;width:12px;height:4px;background:#1e3a5f;border-radius:2px;margin-right:4px;vertical-align:middle"></span>Saldo Acumulado</span>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+(function(){
+  var mLbls  = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
+  var mRec   = [52400,31,61627,62,86115,77,132527,84,149123,53,764094,71,98822,45,6827,94,5061,28,4060,4060,4060];
+  var mPag   = [-9310,68,0,-93123,22,-104441,25,-144163,35,-357200,74,-201897,08,-196071,35,-194614,17,-191808,25,-192388,25,-184385,41];
+  var mBal   = [256844,68,318472,3,311464,85,339551,44,344511,62,751405,59,648330,96,459087,55,269534,66,81786,41,-106541,84,-286867,25];
+  var wLbls  = ["01/01","08/01","15/01","22/01","29/01","05/02","12/02","19/02","26/02","05/03","12/03","19/03","26/03","02/04","09/04","16/04","23/04","30/04","07/05","14/05","21/05","28/05","04/06","11/06","18/06","25/06","02/07","09/07","16/07","23/07","30/07","06/08","13/08","20/08","27/08","03/09","10/09","17/09","24/09","01/10","08/10","15/10","22/10","29/10","05/11","12/11","19/11","26/11","03/12","10/12","17/12","24/12"];
+  var wRec   = [0,0,4600,3001,28,35511,03,12285,78,15468,28,21410,28,4251,28,34197,78,1600,17754,37,25899,16,24164,46,37681,8,28741,28,9651,28,56453,48,28500,13866,68,29301,27,37488,91,89044,99,180053,8,200543,34,256833,63,98818,46,30177,45,41075,7,4569,8,1766,66,0,4060,1001,28,1766,66,0,4060,0,1001,28,0,4060,0,0,0,0,4060,0,0,0,4060,0,0];
+  var wPag   = [0,-7125,0,-2185,68,0,0,0,0,0,-14,35,-25936,49,0,-66940,18,-5840,59,-11028,3,-19530,25,-65993,12,-2281,19,-3224,64,-38063,08,-65774,42,-37101,21,-37137,98,-225459,09,-42342,68,-43801,68,-11570,31,-111637,25,-46816,3,-33281,25,-4467,28,-109879,18,-22595,91,-58315,52,-3249,14,-7726,6,-118230,32,-37020,41,-29555,16,-9558,28,-108512,25,-44606,92,-29130,8,-4217,28,-77202,65,-53036,88,-33487,54,-24443,9,-9558,28,-115056,46,-30639,87,-29130,8];
+  var wBal   = [213755,05,206630,05,211230,05,212045,65,247556,68,259842,46,275310,74,296721,02,300972,3,335155,73,310819,24,328573,61,287532,59,305856,46,332509,96,341720,99,285379,15,339551,44,364826,8,340630,4,304157,25,304544,95,356451,96,311046,67,469247,33,682279,28,769527,43,688067,63,682327,03,653615,58,650914,96,541035,78,522499,87,465185,63,463703,15,455976,55,341806,23,304785,82,276231,94,266673,66,162221,41,117614,49,88483,69,84266,41,7063,76,-41913,12,-75400,66,-99844,56,-109402,84,-220399,3,-251039,17,-280169,97];
+
+  var fmt = function(v){ return 'R\$ '+Math.abs(v).toLocaleString('pt-BR',{minimumFractionDigits:0,maximumFractionDigits:0}); };
+
+  var chart = new Chart(document.getElementById('mainChart').getContext('2d'), {
+    data: {
+      labels: mLbls,
+      datasets: [
+        { type:'bar',  label:'Entradas',      data:mRec, backgroundColor:'rgba(67,160,71,.65)', borderColor:'#43a047', borderWidth:1 },
+        { type:'bar',  label:'Saidas',        data:mPag, backgroundColor:'rgba(229,57,53,.55)', borderColor:'#e53935', borderWidth:1 },
+        { type:'line', label:'Saldo Acum.',   data:mBal, borderColor:'#1e3a5f', backgroundColor:'transparent',
+          borderWidth:2.5, pointRadius:4, pointBackgroundColor:'#1e3a5f', tension:0.3, yAxisID:'y2' }
+      ]
+    },
+    options: {
+      responsive:true, maintainAspectRatio:false,
+      interaction:{ mode:'index', intersect:false },
+      plugins:{
+        legend:{ display:false },
+        tooltip:{
+          callbacks:{
+            label:function(c){ return ' '+c.dataset.label+': '+fmt(c.parsed.y); }
+          }
+        }
+      },
+      scales:{
+        x:{ ticks:{ color:'#555', font:{size:11} }, grid:{ color:'rgba(0,0,0,.04)' } },
+        y:{ ticks:{ color:'#888', font:{size:10}, callback:function(v){ return fmt(v); } }, grid:{ color:'rgba(0,0,0,.06)' } },
+        y2:{ position:'right', ticks:{ color:'#1e3a5f', font:{size:10}, callback:function(v){ return fmt(v); } }, grid:{ drawOnChartArea:false } }
+      }
+    }
+  });
+
+  window.setView = function(view){
+    var isMensal = view === 'mensal';
+    document.getElementById('btn-mensal').style.background  = isMensal ? '#1e3a5f' : 'white';
+    document.getElementById('btn-mensal').style.color       = isMensal ? 'white'   : '#1e3a5f';
+    document.getElementById('btn-semanal').style.background = isMensal ? 'white'   : '#1e3a5f';
+    document.getElementById('btn-semanal').style.color      = isMensal ? '#1e3a5f' : 'white';
+
+    chart.data.labels         = isMensal ? mLbls : wLbls;
+    chart.data.datasets[0].data = isMensal ? mRec  : wRec;
+    chart.data.datasets[1].data = isMensal ? mPag  : wPag;
+    chart.data.datasets[2].data = isMensal ? mBal  : wBal;
+    chart.update('active');
+  };
+})();
+</script>
+<div class="curr-card">
     <div class="curr-card-title">&#9889; Antecipacao necessaria para manter caixa positivo</div>
     <div class='curr-company-row'><div class='curr-company-name'><div class='curr-dot' style='background:#2196F3'></div>ICC Instituto</div><div><span class='curr-value' style='color:#7b1fa2'>R$ 277.136,00</span><span class='curr-count'>para caixa positivo</span></div></div><div class='curr-company-row'><div class='curr-company-name'><div class='curr-dot' style='background:#43a047'></div>ICC Telecom</div><div><span class='curr-value' style='color:#2e7d32'>Nao necessaria</span><span class='curr-count'>Caixa projetado positivo</span></div></div><div class='curr-company-row'><div class='curr-company-name'><div class='curr-dot' style='background:#8e24aa'></div>ICC Medical</div><div><span class='curr-value' style='color:#7b1fa2'>R$ 223.272,00</span><span class='curr-count'>para caixa positivo</span></div></div>
     <div class="curr-company-row" style="border-top:2px solid #e0e0e0;margin-top:8px;padding-top:14px">
@@ -97,7 +174,84 @@ tbody td{padding:9px 12px;border-bottom:1px solid #f0f0f0;vertical-align:middle}
     <h2>&#9889; Antecipacao de Recebiveis</h2>
     <p>Valor minimo a antecipar por empresa para manter caixa positivo em 2026</p>
   </div>
-  <div class="curr-card">
+  
+<!-- ═══ CHART BLOCK ═══ -->
+<div class="section" style="margin-bottom:18px">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid #f0f2f5">
+    <h3 style="border:none;padding:0;margin:0">&#128200; Fluxo de Caixa Consolidado &#8212; Entradas vs Saidas</h3>
+    <div style="display:flex;gap:6px">
+      <button onclick="setView('mensal')" id="btn-mensal" style="padding:5px 14px;border:2px solid #1e3a5f;border-radius:20px;background:#1e3a5f;color:white;font-size:12px;font-weight:700;cursor:pointer">Mensal</button>
+      <button onclick="setView('semanal')" id="btn-semanal" style="padding:5px 14px;border:2px solid #1e3a5f;border-radius:20px;background:white;color:#1e3a5f;font-size:12px;font-weight:700;cursor:pointer">Semanal</button>
+    </div>
+  </div>
+  <div style="position:relative;height:320px">
+    <canvas id="mainChart"></canvas>
+  </div>
+  <div style="display:flex;gap:20px;justify-content:center;margin-top:12px;font-size:11px;color:#666">
+    <span><span style="display:inline-block;width:12px;height:12px;background:#43a047;border-radius:2px;margin-right:4px;vertical-align:middle"></span>Entradas (A Receber)</span>
+    <span><span style="display:inline-block;width:12px;height:12px;background:#e53935;border-radius:2px;margin-right:4px;vertical-align:middle"></span>Saidas (A Pagar)</span>
+    <span><span style="display:inline-block;width:12px;height:4px;background:#1e3a5f;border-radius:2px;margin-right:4px;vertical-align:middle"></span>Saldo Acumulado</span>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+(function(){
+  var mLbls  = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
+  var mRec   = [52400,31,61627,62,86115,77,132527,84,149123,53,764094,71,98822,45,6827,94,5061,28,4060,4060,4060];
+  var mPag   = [-9310,68,0,-93123,22,-104441,25,-144163,35,-357200,74,-201897,08,-196071,35,-194614,17,-191808,25,-192388,25,-184385,41];
+  var mBal   = [256844,68,318472,3,311464,85,339551,44,344511,62,751405,59,648330,96,459087,55,269534,66,81786,41,-106541,84,-286867,25];
+  var wLbls  = ["01/01","08/01","15/01","22/01","29/01","05/02","12/02","19/02","26/02","05/03","12/03","19/03","26/03","02/04","09/04","16/04","23/04","30/04","07/05","14/05","21/05","28/05","04/06","11/06","18/06","25/06","02/07","09/07","16/07","23/07","30/07","06/08","13/08","20/08","27/08","03/09","10/09","17/09","24/09","01/10","08/10","15/10","22/10","29/10","05/11","12/11","19/11","26/11","03/12","10/12","17/12","24/12"];
+  var wRec   = [0,0,4600,3001,28,35511,03,12285,78,15468,28,21410,28,4251,28,34197,78,1600,17754,37,25899,16,24164,46,37681,8,28741,28,9651,28,56453,48,28500,13866,68,29301,27,37488,91,89044,99,180053,8,200543,34,256833,63,98818,46,30177,45,41075,7,4569,8,1766,66,0,4060,1001,28,1766,66,0,4060,0,1001,28,0,4060,0,0,0,0,4060,0,0,0,4060,0,0];
+  var wPag   = [0,-7125,0,-2185,68,0,0,0,0,0,-14,35,-25936,49,0,-66940,18,-5840,59,-11028,3,-19530,25,-65993,12,-2281,19,-3224,64,-38063,08,-65774,42,-37101,21,-37137,98,-225459,09,-42342,68,-43801,68,-11570,31,-111637,25,-46816,3,-33281,25,-4467,28,-109879,18,-22595,91,-58315,52,-3249,14,-7726,6,-118230,32,-37020,41,-29555,16,-9558,28,-108512,25,-44606,92,-29130,8,-4217,28,-77202,65,-53036,88,-33487,54,-24443,9,-9558,28,-115056,46,-30639,87,-29130,8];
+  var wBal   = [213755,05,206630,05,211230,05,212045,65,247556,68,259842,46,275310,74,296721,02,300972,3,335155,73,310819,24,328573,61,287532,59,305856,46,332509,96,341720,99,285379,15,339551,44,364826,8,340630,4,304157,25,304544,95,356451,96,311046,67,469247,33,682279,28,769527,43,688067,63,682327,03,653615,58,650914,96,541035,78,522499,87,465185,63,463703,15,455976,55,341806,23,304785,82,276231,94,266673,66,162221,41,117614,49,88483,69,84266,41,7063,76,-41913,12,-75400,66,-99844,56,-109402,84,-220399,3,-251039,17,-280169,97];
+
+  var fmt = function(v){ return 'R\$ '+Math.abs(v).toLocaleString('pt-BR',{minimumFractionDigits:0,maximumFractionDigits:0}); };
+
+  var chart = new Chart(document.getElementById('mainChart').getContext('2d'), {
+    data: {
+      labels: mLbls,
+      datasets: [
+        { type:'bar',  label:'Entradas',      data:mRec, backgroundColor:'rgba(67,160,71,.65)', borderColor:'#43a047', borderWidth:1 },
+        { type:'bar',  label:'Saidas',        data:mPag, backgroundColor:'rgba(229,57,53,.55)', borderColor:'#e53935', borderWidth:1 },
+        { type:'line', label:'Saldo Acum.',   data:mBal, borderColor:'#1e3a5f', backgroundColor:'transparent',
+          borderWidth:2.5, pointRadius:4, pointBackgroundColor:'#1e3a5f', tension:0.3, yAxisID:'y2' }
+      ]
+    },
+    options: {
+      responsive:true, maintainAspectRatio:false,
+      interaction:{ mode:'index', intersect:false },
+      plugins:{
+        legend:{ display:false },
+        tooltip:{
+          callbacks:{
+            label:function(c){ return ' '+c.dataset.label+': '+fmt(c.parsed.y); }
+          }
+        }
+      },
+      scales:{
+        x:{ ticks:{ color:'#555', font:{size:11} }, grid:{ color:'rgba(0,0,0,.04)' } },
+        y:{ ticks:{ color:'#888', font:{size:10}, callback:function(v){ return fmt(v); } }, grid:{ color:'rgba(0,0,0,.06)' } },
+        y2:{ position:'right', ticks:{ color:'#1e3a5f', font:{size:10}, callback:function(v){ return fmt(v); } }, grid:{ drawOnChartArea:false } }
+      }
+    }
+  });
+
+  window.setView = function(view){
+    var isMensal = view === 'mensal';
+    document.getElementById('btn-mensal').style.background  = isMensal ? '#1e3a5f' : 'white';
+    document.getElementById('btn-mensal').style.color       = isMensal ? 'white'   : '#1e3a5f';
+    document.getElementById('btn-semanal').style.background = isMensal ? 'white'   : '#1e3a5f';
+    document.getElementById('btn-semanal').style.color      = isMensal ? '#1e3a5f' : 'white';
+
+    chart.data.labels         = isMensal ? mLbls : wLbls;
+    chart.data.datasets[0].data = isMensal ? mRec  : wRec;
+    chart.data.datasets[1].data = isMensal ? mPag  : wPag;
+    chart.data.datasets[2].data = isMensal ? mBal  : wBal;
+    chart.update('active');
+  };
+})();
+</script>
+<div class="curr-card">
     <div class="curr-card-title">Antecipacao necessaria por empresa</div>
     <div class='curr-company-row'><div class='curr-company-name'><div class='curr-dot' style='background:#2196F3'></div>ICC Instituto</div><div><span class='curr-value' style='color:#7b1fa2'>R$ 277.136,00</span><span class='curr-count'>para caixa positivo</span></div></div><div class='curr-company-row'><div class='curr-company-name'><div class='curr-dot' style='background:#43a047'></div>ICC Telecom</div><div><span class='curr-value' style='color:#2e7d32'>Nao necessaria</span><span class='curr-count'>Caixa projetado positivo</span></div></div><div class='curr-company-row'><div class='curr-company-name'><div class='curr-dot' style='background:#8e24aa'></div>ICC Medical</div><div><span class='curr-value' style='color:#7b1fa2'>R$ 223.272,00</span><span class='curr-count'>para caixa positivo</span></div></div>
     <div class="curr-company-row" style="border-top:2px solid #e0e0e0;margin-top:8px;padding-top:14px">
