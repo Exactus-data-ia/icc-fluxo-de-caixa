@@ -23,16 +23,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .card:hover{transform:translateY(-2px)}.card.red{border-top-color:#e53935}
 .card-value{font-size:26px;font-weight:800;color:#1e3a5f;margin-bottom:5px;line-height:1.1}.card.red .card-value{color:#c62828}
 .card-label{font-size:12px;color:#888;font-weight:500}
-.chart-section{background:white;border-radius:10px;padding:20px 22px;margin-bottom:18px;box-shadow:0 2px 8px rgba(0,0,0,.06);border-top:4px solid #1e3a5f}
-.chart-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px}
-.chart-header h3{font-size:15px;font-weight:700;color:#1e3a5f}
+.two-charts{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}
+@media(max-width:1000px){.two-charts{grid-template-columns:1fr}}
+.chart-section{background:white;border-radius:10px;padding:20px 22px;box-shadow:0 2px 8px rgba(0,0,0,.06);border-top:4px solid #1e3a5f}
+.chart-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px}
+.chart-header h3{font-size:14px;font-weight:700;color:#1e3a5f}
 .chart-toggles{display:flex;gap:6px}
-.chart-toggle{padding:5px 16px;border-radius:20px;font-size:12px;font-weight:700;cursor:pointer;transition:all .15s;border:2px solid #1e3a5f}
+.chart-toggle{padding:4px 14px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;transition:all .15s;border:2px solid #1e3a5f}
 .chart-toggle.active{background:#1e3a5f;color:white}.chart-toggle:not(.active){background:white;color:#1e3a5f}
-.chart-wrap{position:relative;height:320px}
-.chart-legend{display:flex;gap:20px;justify-content:center;margin-top:10px;font-size:11px;color:#666;flex-wrap:wrap}
+.chart-wrap{position:relative;height:260px}
+.chart-legend{display:flex;gap:16px;justify-content:center;margin-top:8px;font-size:11px;color:#666;flex-wrap:wrap}
 .legend-dot{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:middle}
-.legend-line{display:inline-block;width:18px;height:3px;border-radius:2px;margin-right:4px;vertical-align:middle}
+.legend-line{display:inline-block;width:16px;height:3px;border-radius:2px;margin-right:4px;vertical-align:middle}
+.chart-section-full{background:white;border-radius:10px;padding:20px 22px;margin-bottom:18px;box-shadow:0 2px 8px rgba(0,0,0,.06);border-top:4px solid #1e3a5f}
+.chart-wrap-full{position:relative;height:300px}
 .section{background:white;border-radius:10px;padding:20px 22px;margin-bottom:18px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
 .section h3{font-size:15px;font-weight:700;margin-bottom:16px;color:#1e3a5f;padding-bottom:10px;border-bottom:2px solid #f0f2f5}
 .aging-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
@@ -67,7 +71,7 @@ tbody td{padding:9px 12px;border-bottom:1px solid #f0f0f0;vertical-align:middle}
 <body>
 <div class="header">
   <div class="header-left"><h1>&#128176; Fluxo de Caixa &#8212; ICC Grupo</h1><p>Gerado automaticamente via integracao Omie API</p></div>
-  <div class="header-right">Ultima atualizacao<br/><strong>02/06/2026 17:13:14</strong></div>
+  <div class="header-right">Ultima atualizacao<br/><strong>02/06/2026 17:18:59</strong></div>
 </div>
 <div class="tabs">
   <button class="tab-btn active" data-tab="consolidado" onclick="showTab('consolidado')">&#128202; Consolidado</button>
@@ -88,19 +92,35 @@ tbody td{padding:9px 12px;border-bottom:1px solid #f0f0f0;vertical-align:middle}
     <div class="card red"><div class="card-value">R$ 1.869.403,75</div><div class="card-label">Total a Pagar (2026)</div></div>
     <div class="card red"><div class="card-value" style="color:#c62828">R$ -286.867,25</div><div class="card-label">Saldo Projetado Final</div></div>
   </div>
-  <div class="chart-section">
-    <div class="chart-header">
-      <h3>&#128200; Fluxo de Caixa Consolidado &#8212; Entradas vs Saidas</h3>
-      <div class="chart-toggles">
-        <button class="chart-toggle active" id="btn_m_consolidado" onclick="setView('consolidado','m')">Mensal</button>
-        <button class="chart-toggle"        id="btn_s_consolidado" onclick="setView('consolidado','s')">Semanal</button>
+  <div class="two-charts">
+    <div class="chart-section">
+      <div class="chart-header">
+        <h3>&#128200; Fluxo de Caixa &#8212; Entradas vs Saidas</h3>
+        <div class="chart-toggles">
+          <button class="chart-toggle active" id="btn_m_consolidado" onclick="setView('consolidado','m')">Mensal</button>
+          <button class="chart-toggle"        id="btn_s_consolidado" onclick="setView('consolidado','s')">Semanal</button>
+        </div>
+      </div>
+      <div class="chart-wrap"><canvas id="chart_consolidado"></canvas></div>
+      <div class="chart-legend">
+        <span><span class="legend-dot" style="background:#43a047"></span>Entradas</span>
+        <span><span class="legend-dot" style="background:#e53935"></span>Saidas</span>
+        <span><span class="legend-line" style="background:#1e3a5f"></span>Saldo Acum.</span>
       </div>
     </div>
-    <div class="chart-wrap"><canvas id="chart_consolidado"></canvas></div>
-    <div class="chart-legend">
-      <span><span class="legend-dot" style="background:#43a047"></span>Entradas</span>
-      <span><span class="legend-dot" style="background:#e53935"></span>Saidas</span>
-      <span><span class="legend-line" style="background:#1e3a5f"></span>Saldo Acumulado</span>
+    <div class="chart-section" style="border-top-color:#e53935">
+      <div class="chart-header">
+        <h3>&#128197; Contas a Pagar por Periodo</h3>
+        <div class="chart-toggles">
+          <button class="chart-toggle active" id="btn_pm_consolidado" onclick="setPagView('consolidado','m')">Mensal</button>
+          <button class="chart-toggle"        id="btn_ps_consolidado" onclick="setPagView('consolidado','s')">Semanal</button>
+        </div>
+      </div>
+      <div class="chart-wrap"><canvas id="chart_pag_consolidado"></canvas></div>
+      <div class="chart-legend">
+        <span><span class="legend-dot" style="background:#e53935"></span>A Pagar no periodo</span>
+        <span><span class="legend-line" style="background:#b71c1c"></span>Acumulado</span>
+      </div>
     </div>
   </div>
   <div class="curr-card">
@@ -147,19 +167,35 @@ tbody td{padding:9px 12px;border-bottom:1px solid #f0f0f0;vertical-align:middle}
     <div class="card red"><div class="card-value">R$ 904.616,58</div><div class="card-label">A Pagar (299 titulos)</div></div>
     <div class="card red"><div class="card-value" style="color:#c62828">R$ -277.136,46</div><div class="card-label">Saldo Projetado</div></div>
   </div>
-  <div class="chart-section">
-    <div class="chart-header">
-      <h3>&#128200; Fluxo de Caixa &#8212; Entradas vs Saidas</h3>
-      <div class="chart-toggles">
-        <button class="chart-toggle active" id="btn_m_instituto" onclick="setView('instituto','m')">Mensal</button>
-        <button class="chart-toggle"        id="btn_s_instituto" onclick="setView('instituto','s')">Semanal</button>
+  <div class="two-charts">
+    <div class="chart-section">
+      <div class="chart-header">
+        <h3>&#128200; Fluxo de Caixa &#8212; Entradas vs Saidas</h3>
+        <div class="chart-toggles">
+          <button class="chart-toggle active" id="btn_m_instituto" onclick="setView('instituto','m')">Mensal</button>
+          <button class="chart-toggle"        id="btn_s_instituto" onclick="setView('instituto','s')">Semanal</button>
+        </div>
+      </div>
+      <div class="chart-wrap"><canvas id="chart_instituto"></canvas></div>
+      <div class="chart-legend">
+        <span><span class="legend-dot" style="background:#43a047"></span>Entradas</span>
+        <span><span class="legend-dot" style="background:#e53935"></span>Saidas</span>
+        <span><span class="legend-line" style="background:#2196F3"></span>Saldo Acum.</span>
       </div>
     </div>
-    <div class="chart-wrap"><canvas id="chart_instituto"></canvas></div>
-    <div class="chart-legend">
-      <span><span class="legend-dot" style="background:#43a047"></span>Entradas</span>
-      <span><span class="legend-dot" style="background:#e53935"></span>Saidas</span>
-      <span><span class="legend-line" style="background:#2196F3"></span>Saldo Acumulado</span>
+    <div class="chart-section" style="border-top-color:#e53935">
+      <div class="chart-header">
+        <h3>&#128197; Contas a Pagar por Periodo</h3>
+        <div class="chart-toggles">
+          <button class="chart-toggle active" id="btn_pm_instituto" onclick="setPagView('instituto','m')">Mensal</button>
+          <button class="chart-toggle"        id="btn_ps_instituto" onclick="setPagView('instituto','s')">Semanal</button>
+        </div>
+      </div>
+      <div class="chart-wrap"><canvas id="chart_pag_instituto"></canvas></div>
+      <div class="chart-legend">
+        <span><span class="legend-dot" style="background:#e53935"></span>A Pagar por periodo</span>
+        <span><span class="legend-line" style="background:#b71c1c"></span>Acumulado</span>
+      </div>
     </div>
   </div>
   <div class="section"><h3>Fluxo Mensal 2026</h3><div class="table-container"><table>
@@ -182,19 +218,35 @@ tbody td{padding:9px 12px;border-bottom:1px solid #f0f0f0;vertical-align:middle}
     <div class="card red"><div class="card-value">R$ 439.235,05</div><div class="card-label">A Pagar (130 titulos)</div></div>
     <div class="card "><div class="card-value" style="color:#2e7d32">R$ 213.540,99</div><div class="card-label">Saldo Projetado</div></div>
   </div>
-  <div class="chart-section">
-    <div class="chart-header">
-      <h3>&#128200; Fluxo de Caixa &#8212; Entradas vs Saidas</h3>
-      <div class="chart-toggles">
-        <button class="chart-toggle active" id="btn_m_telecom" onclick="setView('telecom','m')">Mensal</button>
-        <button class="chart-toggle"        id="btn_s_telecom" onclick="setView('telecom','s')">Semanal</button>
+  <div class="two-charts">
+    <div class="chart-section">
+      <div class="chart-header">
+        <h3>&#128200; Fluxo de Caixa &#8212; Entradas vs Saidas</h3>
+        <div class="chart-toggles">
+          <button class="chart-toggle active" id="btn_m_telecom" onclick="setView('telecom','m')">Mensal</button>
+          <button class="chart-toggle"        id="btn_s_telecom" onclick="setView('telecom','s')">Semanal</button>
+        </div>
+      </div>
+      <div class="chart-wrap"><canvas id="chart_telecom"></canvas></div>
+      <div class="chart-legend">
+        <span><span class="legend-dot" style="background:#43a047"></span>Entradas</span>
+        <span><span class="legend-dot" style="background:#e53935"></span>Saidas</span>
+        <span><span class="legend-line" style="background:#43a047"></span>Saldo Acum.</span>
       </div>
     </div>
-    <div class="chart-wrap"><canvas id="chart_telecom"></canvas></div>
-    <div class="chart-legend">
-      <span><span class="legend-dot" style="background:#43a047"></span>Entradas</span>
-      <span><span class="legend-dot" style="background:#e53935"></span>Saidas</span>
-      <span><span class="legend-line" style="background:#43a047"></span>Saldo Acumulado</span>
+    <div class="chart-section" style="border-top-color:#e53935">
+      <div class="chart-header">
+        <h3>&#128197; Contas a Pagar por Periodo</h3>
+        <div class="chart-toggles">
+          <button class="chart-toggle active" id="btn_pm_telecom" onclick="setPagView('telecom','m')">Mensal</button>
+          <button class="chart-toggle"        id="btn_ps_telecom" onclick="setPagView('telecom','s')">Semanal</button>
+        </div>
+      </div>
+      <div class="chart-wrap"><canvas id="chart_pag_telecom"></canvas></div>
+      <div class="chart-legend">
+        <span><span class="legend-dot" style="background:#e53935"></span>A Pagar por periodo</span>
+        <span><span class="legend-line" style="background:#b71c1c"></span>Acumulado</span>
+      </div>
     </div>
   </div>
   <div class="section"><h3>Fluxo Mensal 2026</h3><div class="table-container"><table>
@@ -217,19 +269,35 @@ tbody td{padding:9px 12px;border-bottom:1px solid #f0f0f0;vertical-align:middle}
     <div class="card red"><div class="card-value">R$ 525.552,12</div><div class="card-label">A Pagar (105 titulos)</div></div>
     <div class="card red"><div class="card-value" style="color:#c62828">R$ -223.271,78</div><div class="card-label">Saldo Projetado</div></div>
   </div>
-  <div class="chart-section">
-    <div class="chart-header">
-      <h3>&#128200; Fluxo de Caixa &#8212; Entradas vs Saidas</h3>
-      <div class="chart-toggles">
-        <button class="chart-toggle active" id="btn_m_medical" onclick="setView('medical','m')">Mensal</button>
-        <button class="chart-toggle"        id="btn_s_medical" onclick="setView('medical','s')">Semanal</button>
+  <div class="two-charts">
+    <div class="chart-section">
+      <div class="chart-header">
+        <h3>&#128200; Fluxo de Caixa &#8212; Entradas vs Saidas</h3>
+        <div class="chart-toggles">
+          <button class="chart-toggle active" id="btn_m_medical" onclick="setView('medical','m')">Mensal</button>
+          <button class="chart-toggle"        id="btn_s_medical" onclick="setView('medical','s')">Semanal</button>
+        </div>
+      </div>
+      <div class="chart-wrap"><canvas id="chart_medical"></canvas></div>
+      <div class="chart-legend">
+        <span><span class="legend-dot" style="background:#43a047"></span>Entradas</span>
+        <span><span class="legend-dot" style="background:#e53935"></span>Saidas</span>
+        <span><span class="legend-line" style="background:#8e24aa"></span>Saldo Acum.</span>
       </div>
     </div>
-    <div class="chart-wrap"><canvas id="chart_medical"></canvas></div>
-    <div class="chart-legend">
-      <span><span class="legend-dot" style="background:#43a047"></span>Entradas</span>
-      <span><span class="legend-dot" style="background:#e53935"></span>Saidas</span>
-      <span><span class="legend-line" style="background:#8e24aa"></span>Saldo Acumulado</span>
+    <div class="chart-section" style="border-top-color:#e53935">
+      <div class="chart-header">
+        <h3>&#128197; Contas a Pagar por Periodo</h3>
+        <div class="chart-toggles">
+          <button class="chart-toggle active" id="btn_pm_medical" onclick="setPagView('medical','m')">Mensal</button>
+          <button class="chart-toggle"        id="btn_ps_medical" onclick="setPagView('medical','s')">Semanal</button>
+        </div>
+      </div>
+      <div class="chart-wrap"><canvas id="chart_pag_medical"></canvas></div>
+      <div class="chart-legend">
+        <span><span class="legend-dot" style="background:#e53935"></span>A Pagar por periodo</span>
+        <span><span class="legend-line" style="background:#b71c1c"></span>Acumulado</span>
+      </div>
     </div>
   </div>
   <div class="section"><h3>Fluxo Mensal 2026</h3><div class="table-container"><table>
@@ -251,79 +319,104 @@ var CHART_DATA = {
   medical: { dot:'#8e24aa', m:{ labels:["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"], rec:[1001,28,13001,28,11409,03,9693,78,21413,78,226077,78,17680,85,1001,28,1001,28,0,0,0], pag:[0,0,0,0,0,-79830,6,-76665,2,-74790,2,-74790,2,-73158,64,-73158,64,-73158,64], bal:[1001,28,14002,56,25411,59,35105,37,56519,15,202766,33,143781,98,69993,06,-3795,86,-76954,5,-150113,14,-223271,78] }, s:{ labels:["01/01","08/01","15/01","22/01","29/01","05/02","12/02","19/02","26/02","05/03","12/03","19/03","26/03","02/04","09/04","16/04","23/04","30/04","07/05","14/05","21/05","28/05","04/06","11/06","18/06","25/06","02/07","09/07","16/07","23/07","30/07","06/08","13/08","20/08","27/08","03/09","10/09","17/09","24/09","01/10","08/10","15/10","22/10","29/10","05/11","12/11","19/11","26/11","03/12","10/12","17/12","24/12"], rec:[0,0,0,1001,28,0,0,0,7000,1001,28,5000,0,1407,75,5001,28,5000,0,4692,5,5001,28,0,0,0,1001,28,7145,83,30369,44,29166,66,89427,91,74567,94,23812,5,6333,32,2346,25,1001,28,0,0,0,1001,28,0,0,0,0,1001,28,0,0,0,0,0,0,0,0,0,0,0,0,0], pag:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-49006,56,-4852,3,-23491,74,-2480,-41375,-4631,56,-28178,64,0,-37651,93,-8959,63,-28178,64,0,-2480,-44131,56,0,-28178,64,-2480,-39500,-3000,-28178,64,0,-37651,93,-7328,07,-4686,9,-23491,74,-2480,-42500,0,-28178,64], bal:[0,0,0,1001,28,1001,28,1001,28,1001,28,8001,28,9002,56,14002,56,14002,56,15410,31,20411,59,25411,59,25411,59,30104,09,35105,37,35105,37,35105,37,35105,37,36106,65,43252,48,73621,92,53782,02,138357,63,189433,83,210766,33,175724,65,173439,34,146261,98,146261,98,108610,05,99650,42,72473,06,72473,06,69993,06,25861,5,25861,5,-1315,86,-3795,86,-43295,86,-46295,86,-74474,5,-74474,5,-112126,43,-119454,5,-124141,4,-147633,14,-150113,14,-192613,14,-192613,14,-220791,78] } },
 };
 
-var CHARTS = {};
-var VIEWS  = {};
+var PAG_DATA = {
+  consolidado: { m:{ labels:["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"], pag:[9310,68,0,93123,22,104441,25,144163,35,357200,74,201897,08,196071,35,194614,17,191808,25,192388,25,184385,41], run:[9310,68,9310,68,102433,9,206875,15,351038,5,708239,24,910136,32,1106207,67,1300821,84,1492630,09,1685018,34,1869403,75] }, s:{ labels:["01/01","08/01","15/01","22/01","29/01","05/02","12/02","19/02","26/02","05/03","12/03","19/03","26/03","02/04","09/04","16/04","23/04","30/04","07/05","14/05","21/05","28/05","04/06","11/06","18/06","25/06","02/07","09/07","16/07","23/07","30/07","06/08","13/08","20/08","27/08","03/09","10/09","17/09","24/09","01/10","08/10","15/10","22/10","29/10","05/11","12/11","19/11","26/11","03/12","10/12","17/12","24/12"], pag:[0,7125,0,2185,68,0,0,0,0,0,14,35,25936,49,0,66940,18,5840,59,11028,3,19530,25,65993,12,2281,19,3224,64,38063,08,65774,42,37101,21,37137,98,225459,09,42342,68,43801,68,11570,31,111637,25,46816,3,33281,25,4467,28,109879,18,22595,91,58315,52,3249,14,7726,6,118230,32,37020,41,29555,16,9558,28,108512,25,44606,92,29130,8,4217,28,77202,65,53036,88,33487,54,24443,9,9558,28,115056,46,30639,87,29130,8], run:[0,7125,7125,9310,68,9310,68,9310,68,9310,68,9310,68,9310,68,9325,03,35261,52,35261,52,102201,7,108042,29,119070,59,138600,84,204593,96,206875,15,210099,79,248162,87,313937,29,351038,5,388176,48,613635,57,655978,25,699779,93,711350,24,822987,49,869803,79,903085,04,907552,32,1017431,5,1040027,41,1098342,93,1101592,07,1109318,67,1227548,99,1264569,4,1294124,56,1303682,84,1412195,09,1456802,01,1485932,81,1490150,09,1567352,74,1620389,62,1653877,16,1678321,06,1687879,34,1802935,8,1833575,67,1862706,47] } },
+  instituto: { m:{ labels:["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"], pag:[0,0,87164,15,92818,90275,52,185240,95,76930,6,75962,78,75498,78,75498,78,75858,78,69368,24], run:[0,0,87164,15,179982,15,270257,67,455498,62,532429,22,608392,683890,78,759389,56,835248,34,904616,58] }, s:{ labels:["01/01","08/01","15/01","22/01","29/01","05/02","12/02","19/02","26/02","05/03","12/03","19/03","26/03","02/04","09/04","16/04","23/04","30/04","07/05","14/05","21/05","28/05","04/06","11/06","18/06","25/06","02/07","09/07","16/07","23/07","30/07","06/08","13/08","20/08","27/08","03/09","10/09","17/09","24/09","01/10","08/10","15/10","22/10","29/10","05/11","12/11","19/11","26/11","03/12","10/12","17/12","24/12"], pag:[0,0,0,0,0,0,0,0,0,0,19991,77,0,66940,18,2145,43,5381,4,19530,25,65993,12,0,2861,21778,8,65635,72,0,7684,91,121512,48,37020,38,15449,55,6434,63,34636,31,36924,23,593,46,1811,6,36601,31,8375,77,28580,64,593,46,4776,6,33682,31,36550,41,593,46,4672,6,33636,31,36596,41,593,46,1811,6,28967,08,15906,28580,64,593,46,4672,6,33682,31,30419,87,593,46], run:[0,0,0,0,0,0,0,0,0,0,19991,77,19991,77,86931,95,89077,38,94458,78,113989,03,179982,15,179982,15,182843,15,204621,95,270257,67,270257,67,277942,58,399455,06,436475,44,451924,99,458359,62,492995,93,529920,16,530513,62,532325,22,568926,53,577302,3,605882,94,606476,4,611253,644935,31,681485,72,682079,18,686751,78,720388,09,756984,5,757577,96,759389,56,788356,64,804262,64,832843,28,833436,74,838109,34,871791,65,902211,52,902804,98] } },
+  telecom: { m:{ labels:["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"], pag:[9310,68,0,5959,07,11623,25,53887,83,92129,19,48301,28,45318,37,44325,19,43150,83,43370,83,41858,53], run:[9310,68,9310,68,15269,75,26893,80780,83,172910,02,221211,3,266529,67,310854,86,354005,69,397376,52,439235,05] }, s:{ labels:["01/01","08/01","15/01","22/01","29/01","05/02","12/02","19/02","26/02","05/03","12/03","19/03","26/03","02/04","09/04","16/04","23/04","30/04","07/05","14/05","21/05","28/05","04/06","11/06","18/06","25/06","02/07","09/07","16/07","23/07","30/07","06/08","13/08","20/08","27/08","03/09","10/09","17/09","24/09","01/10","08/10","15/10","22/10","29/10","05/11","12/11","19/11","26/11","03/12","10/12","17/12","24/12"], pag:[0,7125,0,2185,68,0,0,0,0,0,14,35,5944,72,0,0,3695,16,5646,9,0,0,2281,19,363,64,16284,28,138,7,37101,21,29453,07,54940,05,470,4860,39,2655,68,35625,94,5260,51,4509,15,2655,68,35625,94,5260,51,1556,24,2655,68,470,40416,45,470,783,06,2405,68,35375,94,5010,51,358,7,2405,68,10583,64,29802,81,220,358,7,2405,68,38874,15,220,358,7], run:[0,7125,7125,9310,68,9310,68,9310,68,9310,68,9310,68,9310,68,9325,03,15269,75,15269,75,15269,75,18964,91,24611,81,24611,81,24611,81,26893,27256,64,43540,92,43679,62,80780,83,110233,9,165173,95,165643,95,170504,34,173160,02,208785,96,214046,47,218555,62,221211,3,256837,24,262097,75,263653,99,266309,67,266779,67,307196,12,307666,12,308449,18,310854,86,346230,8,351241,31,351600,01,354005,69,364589,33,394392,14,394612,14,394970,84,397376,52,436250,67,436470,67,436829,37] } },
+  medical: { m:{ labels:["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"], pag:[0,0,0,0,0,79830,6,76665,2,74790,2,74790,2,73158,64,73158,64,73158,64], run:[0,0,0,0,0,79830,6,156495,8,231286,306076,2,379234,84,452393,48,525552,12] }, s:{ labels:["01/01","08/01","15/01","22/01","29/01","05/02","12/02","19/02","26/02","05/03","12/03","19/03","26/03","02/04","09/04","16/04","23/04","30/04","07/05","14/05","21/05","28/05","04/06","11/06","18/06","25/06","02/07","09/07","16/07","23/07","30/07","06/08","13/08","20/08","27/08","03/09","10/09","17/09","24/09","01/10","08/10","15/10","22/10","29/10","05/11","12/11","19/11","26/11","03/12","10/12","17/12","24/12"], pag:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,49006,56,4852,3,23491,74,2480,41375,4631,56,28178,64,0,37651,93,8959,63,28178,64,0,2480,44131,56,0,28178,64,2480,39500,3000,28178,64,0,37651,93,7328,07,4686,9,23491,74,2480,42500,0,28178,64], run:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,49006,56,53858,86,77350,6,79830,6,121205,6,125837,16,154015,8,154015,8,191667,73,200627,36,228806,228806,231286,275417,56,275417,56,303596,2,306076,2,345576,2,348576,2,376754,84,376754,84,414406,77,421734,84,426421,74,449913,48,452393,48,494893,48,494893,48,523072,12] } },
+};
 
-var fmtV = function(v){
-  var a = Math.abs(v);
-  if(a >= 1e6) return 'R$ '+(v/1e6).toFixed(1).replace('.',',')+' M';
-  if(a >= 1e3) return 'R$ '+(v/1e3).toFixed(0)+'K';
+var CHARTS={}, PAG_CHARTS={}, VIEWS={}, PAG_VIEWS={};
+
+var fmtV=function(v){
+  var a=Math.abs(v);
+  if(a>=1e6) return 'R$ '+(v/1e6).toFixed(1).replace('.',',')+' M';
+  if(a>=1e3) return 'R$ '+(v/1e3).toFixed(0)+'K';
   return 'R$ '+v.toFixed(0);
 };
 
-function buildChart(id) {
-  if (CHARTS[id]) return;
-  var D   = CHART_DATA[id];
-  var ctx = document.getElementById('chart_'+id);
-  if (!ctx) return;
-  VIEWS[id] = 'm';
-  CHARTS[id] = new Chart(ctx.getContext('2d'), {
-    data: {
-      labels: D.m.labels,
-      datasets: [
-        { type:'bar',  label:'Entradas', data: D.m.rec,
-          backgroundColor:'rgba(67,160,71,.65)', borderColor:'#43a047', borderWidth:1, order:2 },
-        { type:'bar',  label:'Saidas',   data: D.m.pag,
-          backgroundColor:'rgba(229,57,53,.55)', borderColor:'#e53935', borderWidth:1, order:2 },
-        { type:'line', label:'Saldo Acumulado', data: D.m.bal,
-          borderColor: D.dot, backgroundColor:'transparent',
-          borderWidth:2.5, pointRadius:4, pointBackgroundColor: D.dot,
-          tension:0.3, yAxisID:'y2', order:1 }
-      ]
-    },
-    options: {
-      responsive:true, maintainAspectRatio:false,
-      interaction:{ mode:'index', intersect:false },
-      plugins:{
-        legend:{ display:false },
-        tooltip:{ callbacks:{ label:function(c){ return ' '+c.dataset.label+': '+fmtV(c.parsed.y); } } }
-      },
+// Fluxo (entradas + saidas + saldo)
+function buildChart(id){
+  if(CHARTS[id]) return;
+  var D=CHART_DATA[id], ctx=document.getElementById('chart_'+id);
+  if(!ctx) return;
+  VIEWS[id]='m';
+  CHARTS[id]=new Chart(ctx.getContext('2d'),{
+    data:{labels:D.m.labels,datasets:[
+      {type:'bar', label:'Entradas',data:D.m.rec,backgroundColor:'rgba(67,160,71,.65)',borderColor:'#43a047',borderWidth:1,order:2},
+      {type:'bar', label:'Saidas',  data:D.m.pag,backgroundColor:'rgba(229,57,53,.55)',borderColor:'#e53935',borderWidth:1,order:2},
+      {type:'line',label:'Saldo Acumulado',data:D.m.bal,borderColor:D.dot,backgroundColor:'transparent',
+       borderWidth:2.5,pointRadius:3,pointBackgroundColor:D.dot,tension:.3,yAxisID:'y2',order:1}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return' '+c.dataset.label+': '+fmtV(c.parsed.y);}}}},
       scales:{
-        x:{ ticks:{ color:'#555', font:{size:10}, maxRotation:45 }, grid:{ color:'rgba(0,0,0,.04)' } },
-        y:{ ticks:{ color:'#888', font:{size:10}, callback:function(v){ return fmtV(v); } }, grid:{ color:'rgba(0,0,0,.06)' } },
-        y2:{ position:'right', ticks:{ color: D.dot, font:{size:10}, callback:function(v){ return fmtV(v); } }, grid:{ drawOnChartArea:false } }
+        x:{ticks:{color:'#555',font:{size:10},maxRotation:45},grid:{color:'rgba(0,0,0,.04)'}},
+        y:{ticks:{color:'#888',font:{size:10},callback:function(v){return fmtV(v);}},grid:{color:'rgba(0,0,0,.06)'}},
+        y2:{position:'right',ticks:{color:D.dot,font:{size:10},callback:function(v){return fmtV(v);}},grid:{drawOnChartArea:false}}
       }
     }
   });
 }
 
-function setView(id, v) {
-  if (!CHARTS[id]) buildChart(id);
-  VIEWS[id] = v;
-  var D = CHART_DATA[id];
-  var ch = CHARTS[id];
-  document.getElementById('btn_m_'+id).classList.toggle('active', v==='m');
-  document.getElementById('btn_s_'+id).classList.toggle('active', v==='s');
-  ch.data.labels            = D[v].labels;
-  ch.data.datasets[0].data  = D[v].rec;
-  ch.data.datasets[1].data  = D[v].pag;
-  ch.data.datasets[2].data  = D[v].bal;
-  ch.update('active');
-}
-
-function showTab(id) {
-  document.querySelectorAll('.tab-content').forEach(function(t){ t.classList.remove('active'); });
-  document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
-  document.getElementById(id).classList.add('active');
-  document.querySelectorAll('.tab-btn').forEach(function(btn){
-    if(btn.getAttribute('data-tab')===id) btn.classList.add('active');
+// Pagar isolado
+function buildPagChart(id){
+  if(PAG_CHARTS[id]) return;
+  var D=PAG_DATA[id], ctx=document.getElementById('chart_pag_'+id);
+  if(!ctx) return;
+  PAG_VIEWS[id]='m';
+  PAG_CHARTS[id]=new Chart(ctx.getContext('2d'),{
+    data:{labels:D.m.labels,datasets:[
+      {type:'bar', label:'A Pagar',   data:D.m.pag,backgroundColor:'rgba(229,57,53,.6)',borderColor:'#e53935',borderWidth:1,order:2},
+      {type:'line',label:'Acumulado', data:D.m.run,borderColor:'#b71c1c',backgroundColor:'rgba(183,28,28,.08)',
+       borderWidth:2.5,pointRadius:3,pointBackgroundColor:'#b71c1c',tension:.3,fill:true,yAxisID:'y2',order:1}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return' '+c.dataset.label+': '+fmtV(c.parsed.y);}}}},
+      scales:{
+        x:{ticks:{color:'#555',font:{size:10},maxRotation:45},grid:{color:'rgba(0,0,0,.04)'}},
+        y:{ticks:{color:'#888',font:{size:10},callback:function(v){return fmtV(v);}},grid:{color:'rgba(0,0,0,.06)'}},
+        y2:{position:'right',ticks:{color:'#b71c1c',font:{size:10},callback:function(v){return fmtV(v);}},grid:{drawOnChartArea:false}}
+      }
+    }
   });
-  // Build chart after tab is visible (fixes display:none issue)
-  setTimeout(function(){ buildChart(id); }, 50);
 }
 
-// Init consolidado chart on load (already visible)
-window.addEventListener('load', function(){ buildChart('consolidado'); });
+function setView(id,v){
+  if(!CHARTS[id]) buildChart(id);
+  var D=CHART_DATA[id]; VIEWS[id]=v;
+  document.getElementById('btn_m_'+id).classList.toggle('active',v==='m');
+  document.getElementById('btn_s_'+id).classList.toggle('active',v==='s');
+  CHARTS[id].data.labels=D[v].labels;
+  CHARTS[id].data.datasets[0].data=D[v].rec;
+  CHARTS[id].data.datasets[1].data=D[v].pag;
+  CHARTS[id].data.datasets[2].data=D[v].bal;
+  CHARTS[id].update('active');
+}
+
+function setPagView(id,v){
+  if(!PAG_CHARTS[id]) buildPagChart(id);
+  var D=PAG_DATA[id]; PAG_VIEWS[id]=v;
+  document.getElementById('btn_pm_'+id).classList.toggle('active',v==='m');
+  document.getElementById('btn_ps_'+id).classList.toggle('active',v==='s');
+  PAG_CHARTS[id].data.labels=D[v].labels;
+  PAG_CHARTS[id].data.datasets[0].data=D[v].pag;
+  PAG_CHARTS[id].data.datasets[1].data=D[v].run;
+  PAG_CHARTS[id].update('active');
+}
+
+function showTab(id){
+  document.querySelectorAll('.tab-content').forEach(function(t){t.classList.remove('active')});
+  document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active')});
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach(function(btn){if(btn.getAttribute('data-tab')===id)btn.classList.add('active')});
+  setTimeout(function(){ buildChart(id); buildPagChart(id); },50);
+}
+
+window.addEventListener('load',function(){
+  buildChart('consolidado');
+  buildPagChart('consolidado');
+});
 </script>
 </body>
 </html>
